@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "AddAddress": MessageLookupByLibrary.simpleMessage("Add Address"),
+        "AddEGPtocartandgetfreeshipping": MessageLookupByLibrary.simpleMessage(
+            "Add 850 EGP to cart and get free shipping!  "),
         "AddToCart": MessageLookupByLibrary.simpleMessage("Add To Cart"),
         "AddToYourCart":
             MessageLookupByLibrary.simpleMessage("Add To Your Cart"),
@@ -95,6 +97,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Language": MessageLookupByLibrary.simpleMessage("Language"),
         "Login": MessageLookupByLibrary.simpleMessage("Login"),
         "Logout": MessageLookupByLibrary.simpleMessage("Logout"),
+        "MustnotBeEmpty":
+            MessageLookupByLibrary.simpleMessage("Must not Be Empty"),
         "MyAddresses": MessageLookupByLibrary.simpleMessage("My Addresses"),
         "MyOrders": MessageLookupByLibrary.simpleMessage("My Orders"),
         "Name": MessageLookupByLibrary.simpleMessage("Name"),
@@ -114,11 +118,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "PaymentMethod": MessageLookupByLibrary.simpleMessage("Payment Method"),
         "Pickyourfavorites": MessageLookupByLibrary.simpleMessage(
             "Pick your favorites and enjoy a smooth shopping experience."),
+        "Pleasewaitmomentorder": MessageLookupByLibrary.simpleMessage(
+            "Please wait a moment while we securely confirm your order."),
         "Pleasewaitmomentwhile": MessageLookupByLibrary.simpleMessage(
             "Please wait a moment while we securely confirm your order."),
         "PriceRange": MessageLookupByLibrary.simpleMessage("PriceRange"),
         "PrivacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "Processingyouorder":
+            MessageLookupByLibrary.simpleMessage("Processing your order..."),
+        "Processingyourorder":
             MessageLookupByLibrary.simpleMessage("Processing your order..."),
         "ProductInformation":
             MessageLookupByLibrary.simpleMessage("Product Information"),

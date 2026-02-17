@@ -35,10 +35,11 @@ class AuthInput extends StatelessWidget {
         ),
     verticalSpace(8),
         SizedBox(
-            width: 339.w,
-            height: 48.h,
+
+           // height: 48.h,
             child: AppTextFormField(
               isObscureText: obscureText,
+              width: 339.w,
               controller: controller,
               backgroundColor: Colors.white,
               suffixIcon: GestureDetector(onTap:onTap,child: lastIcon??SizedBox()),
@@ -48,13 +49,17 @@ class AuthInput extends StatelessWidget {
                   prefixIcon,
                 ),
               ),
+      validator: validator,
+contentPadding: EdgeInsets.zero,
               hintText: hintText,
+              borderRadius: 8.r,
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.r),
                   borderSide: BorderSide(color: ColorsManager.kPrimaryColor)),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.r),
                   borderSide: BorderSide(color: Color(0xffE5E7EB))),
+
               hintStyle: TextStyles.font16WhiteRegular
                   .copyWith(color: Colors.grey[500]),
             )),

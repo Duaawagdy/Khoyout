@@ -62,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         context.pushReplacementNamed(Routes.signUpScreen);
       } else {
         DioFactory.setTokenIntoHeaderAfterLogin(token);
-        context.pushReplacementNamed(Routes.navigationBar);
+        context.pushReplacementNamed(Routes.navigationBar,arguments: 0);
       }
     } catch (e, stackTrace) {
       debugPrint('Splash screen error: $e');

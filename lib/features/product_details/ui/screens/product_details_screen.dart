@@ -12,12 +12,15 @@ import 'package:khouyot/core/theming/styles.dart';
 import 'package:khouyot/core/utils/assets.dart';
 import 'package:khouyot/core/widgets/app_text_button.dart';
 import 'package:khouyot/core/widgets/image_network.dart';
+import 'package:khouyot/features/cart_screen/data/model/cart_reponse_model.dart';
 import 'package:khouyot/features/cart_screen/logic/cart_cubit.dart';
 import 'package:khouyot/features/product_details/logic/product_details_cubit.dart';
 
 import '../../../../core/routing/routes.dart';
 import '../../../../generated/l10n.dart';
 import '../../../favourites/logic/fav_cubit.dart';
+import '../../../home/ui/screens/home_screen.dart';
+import '../../../nav_bar/logic/nav_bar_cubit.dart';
 import '../../data/model/reviews_response.dart';
 import '../widgets/add_to_cart_state_ui.dart';
 
@@ -36,6 +39,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     final productCubit = ProductDetailsCubit.get(context);
     productCubit.getProductDetails(widget.id);
     productCubit.getReviews(widget.id);
+    productCubit.getGuestMode();
   }
 
   @override
@@ -110,22 +114,27 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     AppTextButton(
                       buttonText: S.of(context).Addtocart,
                       textStyle: TextStyles.font16BoldWhite,
-                      onPressed: () {
-                        if (ProductDetailsCubit.get(context)
-                                .selectedVarientId ==
-                            -1) {
-                          showSnackBar(
-                              context: context,
-                              text: S.of(context).pleaseSelectColor);
-                        } else if (ProductDetailsCubit.get(context)
-                                .productQuantity ==
-                            0) {
-                          showSnackBar(
-                              context: context,
-                              text: S.of(context).pleaseAddQuantity);
-                        } else {
-                          ProductDetailsCubit.get(context).addToCart();
+                      onPressed: (){
+                        if (ProductDetailsCubit.get(context).guestMode) {
+                          showGuestBottomSheet(context);
+                        }else{
+                          if (ProductDetailsCubit.get(context)
+                              .selectedVarientId ==
+                              -1) {
+                            showSnackBar(
+                                context: context,
+                                text: S.of(context).pleaseSelectColor);
+                          } else if (ProductDetailsCubit.get(context)
+                              .productQuantity ==
+                              0) {
+                            showSnackBar(
+                                context: context,
+                                text: S.of(context).pleaseAddQuantity);
+                          } else {
+                            ProductDetailsCubit.get(context).addToCart();
+                          }
                         }
+
                       },
                       borderRadius: 8.r,
                       backgroundColor: ColorsManager.kPrimaryColor,
@@ -173,7 +182,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   )),
                               GestureDetector(
                                 onTap: (){
-                                  context.pushNamed(Routes.cartScreen);
+                                  context.pushNamedAndRemoveUntil(Routes.navigationBar,arguments: 2, predicate: (Route<dynamic> route) { return false; } );
+
                                 },
                                 child: Container(
                                   width: 36.w,
@@ -280,10 +290,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                           verticalSpace(16),
                           Text(
-                              ProductDetailsCubit.get(context)
+                              LocalizationCubit.get(context).locale.languageCode=='ar'?ProductDetailsCubit.get(context)
                                       .productDetailsModel
                                       .data
                                       ?.name ??
+                                  '':ProductDetailsCubit.get(context)
+                                  .productDetailsModel
+                                  .data
+                                  ?.slug ??
                                   '',
                               style: TextStyles.font24BlackBold
                                   .copyWith(fontSize: 20.sp)),
@@ -463,7 +477,7 @@ class ReviewItem extends StatelessWidget {
                         .copyWith(fontWeight: FontWeightHelper.medium),
                   ),
                   Text(
-                    '1 day ago',
+                    review.updatedAt.replaceRange(10, null, ''),
                     style: TextStyles.font14BlackRegular
                         .copyWith(color: Color(0xff515966)),
                   )
@@ -551,10 +565,14 @@ class DescriptionContainer extends StatelessWidget {
           ),
           verticalSpace(16),
           Text(
-            ProductDetailsCubit.get(context)
+            LocalizationCubit.get(context).locale.languageCode=='en'?ProductDetailsCubit.get(context)
                 .productDetailsModel
                 .data!
                 .description
+                .replaceAll(RegExp(r'<[^>]*>'), ''):ProductDetailsCubit.get(context)
+                .productDetailsModel
+                .data!
+                .descriptionAr!
                 .replaceAll(RegExp(r'<[^>]*>'), ''),
             style:
                 TextStyles.font14DarkGreyRegular.copyWith(color: Colors.black),

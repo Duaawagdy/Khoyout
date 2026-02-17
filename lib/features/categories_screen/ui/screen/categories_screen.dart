@@ -9,6 +9,7 @@ import 'package:khouyot/features/categories_screen/logic/categories_cubit.dart';
 import 'package:khouyot/features/home/data/model/category_model.dart';
 
 import '../../../../core/helpers/spacing.dart';
+import '../../../../core/localization/cubit/localization_cubit.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/assets.dart';
 import '../../../../generated/l10n.dart';
@@ -48,7 +49,8 @@ class CategoriesScreen extends StatelessWidget {
                       onTap: () {
                         context.pushNamed(Routes.viewCategoryProduct,
                             arguments: {
-                              "title": categories[index].name,
+                              "title":  LocalizationCubit.get(context).locale.languageCode=='ar'?categories[index].name ?? '':categories[index].slug??"",
+
                               "id": categories[index].id
                             });
                       },
@@ -115,7 +117,7 @@ class CategoryItem extends StatelessWidget {
           ),
           verticalSpace(8),
           Text(
-            category.name ?? '',
+            LocalizationCubit.get(context).locale.languageCode=='ar'?category.name ?? '':category.slug??"",
             textAlign: TextAlign.center,
             style: TextStyles.font14BlackRegular,
           )

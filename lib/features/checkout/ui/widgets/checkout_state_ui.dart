@@ -44,6 +44,7 @@ class CheckoutStateUi extends StatelessWidget {
     BuildContext context,
   )async {
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       isDismissible: false,
       context: context,
       isScrollControlled: true,
@@ -51,33 +52,36 @@ class CheckoutStateUi extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
       ),
       builder: (context) {
-        return ListView(
-          shrinkWrap: true,
-          physics: ScrollPhysics(),
-          children: [
-            verticalSpace(40),
-            Image.asset('assets/Delivery-cuate.png'),
-            verticalSpace(29),
-            SizedBox(
-              width: 275.w,
-              child: Text(
-                textAlign: TextAlign.center,
-                'Processing your order...',
-                style: TextStyles.font20BlackMedium
-                    .copyWith(fontWeight: FontWeightHelper.bold),
+        return SafeArea(
+          bottom: true,
+          child: ListView(
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
+            children: [
+              verticalSpace(40),
+              Image.asset('assets/Delivery-cuate.png'),
+              verticalSpace(29),
+              SizedBox(
+                width: 275.w,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  S.of(context).Processingyourorder,
+                  style: TextStyles.font20BlackMedium
+                      .copyWith(fontWeight: FontWeightHelper.bold),
+                ),
               ),
-            ),
-            verticalSpace(8),
-            SizedBox(
-              width: 293.w,
-              child: Text(
-                textAlign: TextAlign.center,
-                'Please wait a moment while we securely confirm your order.',
-                style: TextStyles.font14BlackRegular,
+              verticalSpace(8),
+              SizedBox(
+                width: 293.w,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  S.of(context).Pleasewaitmomentorder,
+                  style: TextStyles.font14BlackRegular,
+                ),
               ),
-            ),
-            verticalSpace(54)
-          ],
+              verticalSpace(54)
+            ],
+          ),
         );
       },
     );

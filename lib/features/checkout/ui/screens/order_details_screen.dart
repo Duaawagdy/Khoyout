@@ -21,144 +21,148 @@ class OrderDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffF5F5F5),
-      body: ListView(
-        children: [
-          Text(
-            S.of(context).OrderDetails,
-            textAlign: TextAlign.center,
-            style: TextStyles.font16BoldWhite.copyWith(color: Colors.black),
-          ),
-          verticalSpace(24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.check_circle,
-                color: Color(0xff922F34),
-                size: 23.sp,
-              ),
-              horizontalSpace(13),
-              Text(
-                S.of(context).Yourorderhasbeenplacedsuccessfully,
-                textAlign: TextAlign.center,
-                style: TextStyles.font18BlackMedium.copyWith(fontSize: 14.sp),
-              ),
-            ],
-          ),
-          verticalSpace(20),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 18.w),
-            padding: EdgeInsets.symmetric(vertical: 10.h),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(
-                  color: Color(0xffE5E7EB),
-                ),
-                borderRadius: BorderRadius.circular(8.r)),
-            child: Text(
-              '${S.of(context).orderid}${orderResponse.order.id}',
-              style: TextStyles.font14SeconderyBold
-                  .copyWith(color: Color(0xffB93C41)),
+    return SafeArea(
+      bottom: true,
+      child: Scaffold(
+        backgroundColor: Color(0xffF5F5F5),
+        body: ListView(
+          children: [
+            verticalSpace(22),
+            Text(
+              S.of(context).OrderDetails,
               textAlign: TextAlign.center,
+              style: TextStyles.font16BoldWhite.copyWith(color: Colors.black),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
-            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(8.r)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            verticalSpace(24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Icon(
+                  Icons.check_circle,
+                  color: Color(0xff922F34),
+                  size: 23.sp,
+                ),
+                horizontalSpace(13),
                 Text(
-                  S.of(context).Status,
+                  S.of(context).Yourorderhasbeenplacedsuccessfully,
+                  textAlign: TextAlign.center,
                   style: TextStyles.font18BlackMedium.copyWith(fontSize: 14.sp),
                 ),
-                verticalSpace(11),
-                Row(
-                  children: [
-                    CircleAvatar(
-                      maxRadius: 16.r,
-                      backgroundColor: Color(0xffF8E8E9),
-                      child: Image.asset(
-                        AssetsData.package,
-                        width: 20.w,
-                        height: 20.h,
+              ],
+            ),
+            verticalSpace(20),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 18.w),
+              padding: EdgeInsets.symmetric(vertical: 10.h),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    color: Color(0xffE5E7EB),
+                  ),
+                  borderRadius: BorderRadius.circular(8.r)),
+              child: Text(
+                '${S.of(context).orderid}${orderResponse.order.id}',
+                style: TextStyles.font14SeconderyBold
+                    .copyWith(color: Color(0xffB93C41)),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(8.r)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    S.of(context).Status,
+                    style: TextStyles.font18BlackMedium.copyWith(fontSize: 14.sp),
+                  ),
+                  verticalSpace(11),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        maxRadius: 16.r,
+                        backgroundColor: Color(0xffF8E8E9),
+                        child: Image.asset(
+                          AssetsData.package,
+                          width: 20.w,
+                          height: 20.h,
+                        ),
                       ),
-                    ),
-                    horizontalSpace(10),
-                    Text(
-                      orderResponse.order.status,
-                      style: TextStyles.font14BlackRegular
-                          .copyWith(fontWeight: FontWeightHelper.bold),
-                    ),
-                    verticalSpace(9),
-                  ],
-                )
-              ],
+                      horizontalSpace(10),
+                      Text(
+                        orderResponse.order.status,
+                        style: TextStyles.font14BlackRegular
+                            .copyWith(fontWeight: FontWeightHelper.bold),
+                      ),
+                      verticalSpace(9),
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-          ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 18.w),
-              shrinkWrap: true,
-              physics: PageScrollPhysics(),
-              itemCount:orderResponse.order.items.length,
-              separatorBuilder: (context, index) => verticalSpace(12),
-            itemBuilder: (context,index) {
-              return CartProductContainer(cart: orderResponse.order.items, index: index);
-            }
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
-            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(8.r)),
-            child: Column(
-              children: [
-                //verticalSpace(12),
-                OrderDetailsContainer(
-                  orderResponse:
-                      orderResponse.order.createdAt.replaceRange(10, null, ''),
-                  title: S.of(context).Data,
-                ),
-                verticalSpace(24),
-                // OrderDetailsContainer(
-                //   orderResponse:
-                //       orderResponse.order.updatedAt?.replaceRange(10, null, ''),
-                //   title: S.of(context).Deliverydate,
-                // ),
-                verticalSpace(24),
-                OrderDetailsContainer(
-                  orderResponse: orderResponse.paymentMethod == 'cod'
-                      ? S.of(context).CashonDelivery
-                      : S.of(context).CreditCard,
-                  title: S.of(context).PaymentMethod,
-                ),
-                verticalSpace(24),
-                OrderDetailsContainer(
-                  orderResponse:
-                      "${orderResponse.order.total.toString()} ${S.of(context).EGP}",
-                  title: S.of(context).TotalAmount,
-                ),
-                verticalSpace(24),
-              ],
+            ListView.separated(
+              padding: EdgeInsets.symmetric(horizontal: 18.w),
+                shrinkWrap: true,
+                physics: PageScrollPhysics(),
+                itemCount:orderResponse.order.items.length,
+                separatorBuilder: (context, index) => verticalSpace(12),
+              itemBuilder: (context,index) {
+                return CartProductContainer(cart: orderResponse.order.items, index: index);
+              }
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18.0.w),
-            child: AppTextButton(
-                buttonText: S.of(context).BackToHome,
-                textStyle:
-                    TextStyles.font16BoldWhite.copyWith(color: Colors.black),
-                backgroundColor: Colors.white,
-                borderColor: Color(0xffE5E7EB),
-                onPressed: () {
-                  context.pushNamedAndRemoveUntil(Routes.navigationBar, predicate: (Route<dynamic> route) { return false; });
-                }),
-          )
-        ],
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(8.r)),
+              child: Column(
+                children: [
+                  //verticalSpace(12),
+                  OrderDetailsContainer(
+                    orderResponse:
+                        orderResponse.order.createdAt.replaceRange(10, null, ''),
+                    title: S.of(context).Data,
+                  ),
+                  verticalSpace(24),
+                  // OrderDetailsContainer(
+                  //   orderResponse:
+                  //       orderResponse.order.updatedAt?.replaceRange(10, null, ''),
+                  //   title: S.of(context).Deliverydate,
+                  // ),
+                  //verticalSpace(24),
+                  OrderDetailsContainer(
+                    orderResponse: orderResponse.paymentMethod == 'cod'
+                        ? S.of(context).CashonDelivery
+                        : S.of(context).CreditCard,
+                    title: S.of(context).PaymentMethod,
+                  ),
+                  verticalSpace(24),
+                  OrderDetailsContainer(
+                    orderResponse:
+                        "${orderResponse.order.total.toString()} ${S.of(context).EGP}",
+                    title: S.of(context).TotalAmount,
+                  ),
+                  //verticalSpace(24),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18.0.w,vertical: 24.h),
+              child: AppTextButton(
+                  buttonText: S.of(context).BackToHome,
+                  textStyle:
+                      TextStyles.font16BoldWhite.copyWith(color: Colors.black),
+                  backgroundColor: Colors.white,
+                  borderColor: Color(0xffE5E7EB),
+                  onPressed: () {
+                    context.pushNamedAndRemoveUntil(Routes.navigationBar,arguments: 0, predicate: (Route<dynamic> route) { return false; });
+                  }),
+            )
+          ],
+        ),
       ),
     );
   }

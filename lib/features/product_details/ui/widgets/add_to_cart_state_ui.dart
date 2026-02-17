@@ -14,6 +14,7 @@ import 'package:khouyot/core/widgets/app_text_button.dart';
 import 'package:khouyot/core/widgets/image_network.dart';
 import 'package:khouyot/core/widgets/show_dialog_error.dart';
 import 'package:khouyot/features/auth/logic/auth_cubit.dart';
+import 'package:khouyot/features/nav_bar/logic/nav_bar_cubit.dart';
 import 'package:khouyot/features/product_details/data/model/add_to_cart_response.dart';
 import 'package:khouyot/features/product_details/logic/product_details_cubit.dart';
 import 'package:khouyot/generated/l10n.dart';
@@ -139,8 +140,7 @@ class AddToCartStateUi extends StatelessWidget {
                       textStyle: TextStyles.font16BoldWhite
                           .copyWith(color: Colors.black),
                       onPressed: () {
-                        context.pushNamedAndRemoveUntil(Routes.navigationBar, predicate: (Route<dynamic> route) { return false; } );
-
+                        context.pushNamedAndRemoveUntil(Routes.navigationBar,arguments: 0, predicate: (Route<dynamic> route) { return false; } );
 
                       })  ,
                   AppTextButton(
@@ -153,8 +153,8 @@ class AddToCartStateUi extends StatelessWidget {
                       textStyle: TextStyles.font16BoldWhite
                           .copyWith(color: Colors.white),
                       onPressed: () {
-                        context.pushNamed(Routes.cartScreen);
-
+                        context.pushNamedAndRemoveUntil(Routes.navigationBar,arguments: 2, predicate: (Route<dynamic> route) { return false; } );
+                        NavBarCubit.get(context).changeIndex(2);
                       })
                 ],
               )

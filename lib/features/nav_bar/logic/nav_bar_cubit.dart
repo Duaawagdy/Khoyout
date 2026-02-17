@@ -20,25 +20,20 @@ class NavBarCubit extends Cubit<NavBarState> {
   NavBarCubit() : super(NavBarInitial());
 
   static NavBarCubit get(context) => BlocProvider.of(context);
-  PageController pageController = PageController();
 
   int selectedIndex = 0;
+  late PageController pageController;
+
   final screens = [
     MultiBlocProvider(
       providers: [
-        BlocProvider.value(
-          value: getIt<HomeCubit>(),
-        ),
-        BlocProvider.value(
-          value: getIt<FavCubit>()
-            ..getFav(),
-        ),
+        BlocProvider.value(value: getIt<HomeCubit>()),
+        BlocProvider.value(value: getIt<FavCubit>()..getFav()),
       ],
       child: HomeScreen(),
     ),
     BlocProvider.value(
-      value: getIt<CategoriesCubit>()
-        ..getCategories(),
+      value: getIt<CategoriesCubit>()..getCategories(),
       child: CategoriesScreen(),
     ),
     BlocProvider.value(
@@ -48,14 +43,28 @@ class NavBarCubit extends Cubit<NavBarState> {
     BlocProvider.value(
       value: getIt<ProfileCubit>(),
       child: ProfileScreen(),
-    )
+    ),
   ];
+
+  // ✅ Initialize with the correct page from the start
+  void initIndex(int index) {
+    selectedIndex = index;
+    // Create PageController with initialPage to avoid jumpToPage issue
+    pageController = PageController(initialPage: index);
+    emit(ChangeIndex());
+  }
 
   void changeIndex(int newIndex, {bool jumping = true}) {
     selectedIndex = newIndex;
-    if (jumping) {
-      pageController.jumpToPage(newIndex); // Navigate to the specified page
+    if (jumping && pageController.hasClients) {
+      pageController.jumpToPage(newIndex);
     }
     emit(ChangeIndex());
+  }
+
+  @override
+  Future<void> close() {
+    pageController.dispose();
+    return super.close();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:khouyot/core/helpers/spacing.dart';
+import 'package:khouyot/core/localization/cubit/localization_cubit.dart';
 import 'package:khouyot/core/theming/font_weight.dart';
 import 'package:khouyot/core/theming/styles.dart';
 import 'package:khouyot/core/widgets/app_text_button.dart';
@@ -60,23 +61,29 @@ class _VerifySignUpColumnState extends State<VerifySignUpColumn> {
         verticalSpace(24),
         SizedBox(
           width: 300.w,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(otpControllers.length, (index) {
-              return OtpInputField(
-                controller: otpControllers[index],
-                focusNode: focusNodes[index],
-                validator: (value) =>
-                    value == null || value.isEmpty ? "!" : null,
-                onChanged: (value) {
-                  if (value.isEmpty) {
-                    AuthCubit.get(context).focusPreviousField(context);
-                  } else {
-                    AuthCubit.get(context).focusNextField(context);
-                  }
-                },
-              );
-            }),
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: List.generate(otpControllers.length, (index) {
+                return OtpInputField(
+                  controller: otpControllers[index],
+                  focusNode: focusNodes[index],
+                  onBackspacePressed: () {
+                    AuthCubit.get(context).focusPreviousField(context); // 👈 go back on empty backspace
+                  },
+                  validator: (value) =>
+                      value == null || value.isEmpty ? "!" : null,
+                  onChanged: (value) {
+                    if (value.isEmpty) {
+                      AuthCubit.get(context).focusPreviousField(context);
+                    } else {
+                      AuthCubit.get(context).focusNextField(context);
+                    }
+                  },
+                );
+              }),
+            ),
           ),
         ),
         verticalSpace(24),
@@ -103,13 +110,14 @@ AuthCubit.get(context).resendSignUpcode(CashHelper.getString(key: Keys.email)!);
           textStyle: TextStyles.font20WhiteMedium
               .copyWith(fontWeight: FontWeightHelper.bold),
           onPressed: () {
+    if (otpControllers[3].text!='') {
             AuthCubit.get(context).verifySignUp(OtpModel(
                 email: CashHelper.getString(key: Keys.email),
                 otp: otpControllers
                     .map((controller) => controller.text)
                     .join()));
-          },
-          buttonWidth: 307.w,
+          }},
+          buttonWidth: 307,
           buttonHeight: 48.h,
           backgroundColor: Color(0xff441618),
           borderRadius: 8.r,

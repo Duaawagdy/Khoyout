@@ -86,16 +86,17 @@ minLines: 1,
                 borderRadius: BorderRadius.circular(borderRadius?.r ?? 16.0.r),
               ),
           errorBorder: OutlineInputBorder(
+
             borderSide: const BorderSide(
               color: Colors.red,
-              width: 1.3,
+             // width: 1.3,
             ),
             borderRadius: BorderRadius.circular(borderRadius?.r ?? 16.0.r),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: const BorderSide(
               color: Colors.red,
-              width: 1.3,
+             // width: 1.3,
             ),
             borderRadius: BorderRadius.circular(borderRadius?.r ?? 16.0.r),
           ),

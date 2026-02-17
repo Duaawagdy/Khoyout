@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:khouyot/core/helpers/extensions.dart';
 import 'package:khouyot/core/helpers/spacing.dart';
+import 'package:khouyot/core/localization/cubit/localization_cubit.dart';
 import 'package:khouyot/core/theming/colors.dart';
 import 'package:khouyot/core/theming/font_weight.dart';
 import 'package:khouyot/core/theming/styles.dart';
@@ -81,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.symmetric(horizontal: 18.w),
               child: Column(
                 children: [
-                  ViewAll(title: S.of(context).Categories,onTapView: (){
+                  ViewAll(title: S.of(context).Categories,haveAll:true,textcolor:Colors.black,onTapView: (){
                     NavBarCubit.get(context).changeIndex(2);
                   },),
                   verticalSpace(23),
@@ -421,73 +422,76 @@ void showGuestBottomSheet(BuildContext context) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
     ),
     builder: (context) {
-      return ListView(
-        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
-        shrinkWrap: true,
-        physics: ScrollPhysics(),
-        children: [
-          GestureDetector(
-            onTap: () => context.pop(),
-            child: Align(
-              alignment: AlignmentDirectional.topEnd,
-              child: Image.asset(
-                'assets/close-square.png',
-                height: 34.h,
-                width: 34.w,
+      return SafeArea(
+        bottom: true,
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
+          shrinkWrap: true,
+          physics: ScrollPhysics(),
+          children: [
+            GestureDetector(
+              onTap: () => context.pop(),
+              child: Align(
+                alignment: AlignmentDirectional.topEnd,
+                child: Image.asset(
+                  'assets/close-square.png',
+                  height: 34.h,
+                  width: 34.w,
+                ),
               ),
             ),
-          ),
-          Image.asset(
-            'assets/Signup-cuate.png',
-            height: 231.h,
-            width: 231.w,
-          ),
-          verticalSpace(28),
-          Text(
-            S.of(context).logintoyouraccount,
-            textAlign: TextAlign.center,
-            style: TextStyles.font20BlackMedium.copyWith(
-              fontWeight: FontWeightHelper.semiBold,
+            Image.asset(
+              'assets/Signup-cuate.png',
+              height: 231.h,
+              width: 231.w,
             ),
-          ),
-          verticalSpace(8),
-          Text(
-            S.of(context).Signintotrackyourorders,
-            textAlign: TextAlign.center,
-            style: TextStyles.font14BlackRegular,
-          ),
-          verticalSpace(35),
-          AppTextButton(
-            buttonText: S.of(context).CreateAccount,
-            buttonWidth: 202,
-            borderRadius: 8.r,
-            buttonHeight: 43.h,
-            borderColor: Color(0xffE5E7EB),
-            backgroundColor: Colors.white,
-            textStyle: TextStyles.font16BoldWhite.copyWith(
-              color: Colors.black,
+            verticalSpace(28),
+            Text(
+              S.of(context).logintoyouraccount,
+              textAlign: TextAlign.center,
+              style: TextStyles.font20BlackMedium.copyWith(
+                fontWeight: FontWeightHelper.semiBold,
+              ),
             ),
-            onPressed: () {
-              context.pop();
-              context.pushNamedAndRemoveUntil(Routes.signUpScreen, predicate: (Route<dynamic> route) { return false; });
+            verticalSpace(8),
+            Text(
+              S.of(context).Signintotrackyourorders,
+              textAlign: TextAlign.center,
+              style: TextStyles.font14BlackRegular,
+            ),
+            verticalSpace(35),
+            AppTextButton(
+              buttonText: S.of(context).CreateAccount,
+              buttonWidth: 202,
+              borderRadius: 8.r,
+              buttonHeight: 43.h,
+              borderColor: Color(0xffE5E7EB),
+              backgroundColor: Colors.white,
+              textStyle: TextStyles.font16BoldWhite.copyWith(
+                color: Colors.black,
+              ),
+              onPressed: () {
+                context.pop();
+                context.pushNamedAndRemoveUntil(Routes.signUpScreen, predicate: (Route<dynamic> route) { return false; });
 
-            },
-          ),
-          verticalSpace(14),
-          AppTextButton(
-            buttonText: S.of(context).Login,
-            buttonWidth: 121,
-            borderRadius: 8.r,
-            buttonHeight: 43.h,
-            backgroundColor: ColorsManager.kPrimaryColor,
-            textStyle: TextStyles.font16BoldWhite.copyWith(
-              color: Colors.white,
+              },
             ),
-            onPressed: () {
-              context.pushNamedAndRemoveUntil(Routes.signUpScreen, predicate: (Route<dynamic> route) { return false; });
-            },
-          )
-        ],
+            verticalSpace(14),
+            AppTextButton(
+              buttonText: S.of(context).Login,
+              buttonWidth: 121,
+              borderRadius: 8.r,
+              buttonHeight: 43.h,
+              backgroundColor: ColorsManager.kPrimaryColor,
+              textStyle: TextStyles.font16BoldWhite.copyWith(
+                color: Colors.white,
+              ),
+              onPressed: () {
+                context.pushNamedAndRemoveUntil(Routes.signUpScreen, predicate: (Route<dynamic> route) { return false; });
+              },
+            )
+          ],
+        ),
       );
     },
   );
@@ -565,7 +569,8 @@ class Categories extends StatelessWidget {
             onTap: () {
               context.pushNamed(Routes.viewCategoryProduct,
                   arguments: {
-                    "title": categories[index].name,
+                    "title":LocalizationCubit.get(context).locale.languageCode=='ar'?category.name ?? '':category.slug??"",
+
                     "id": categories[index].id
                   });
             },
@@ -584,7 +589,7 @@ class Categories extends StatelessWidget {
                   ),
                   verticalSpace(8),
                   Text(
-                    category.name ?? '',
+                    LocalizationCubit.get(context).locale.languageCode=='ar'?category.name ?? '':category.slug??"",
                     textAlign: TextAlign.center,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,

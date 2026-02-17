@@ -44,7 +44,7 @@ class EmptyWishlist extends StatelessWidget {
             buttonText: S.of(context).BrowseProducts,
             textStyle: TextStyles.font16BoldWhite,
             onPressed: () {
-context.pushNamedAndRemoveUntil(Routes.navigationBar, predicate: (Route<dynamic> route) { return false; },  );
+context.pushNamedAndRemoveUntil(Routes.navigationBar,arguments: 0, predicate: (Route<dynamic> route) { return false; },  );
             }),      ],
     );
   }

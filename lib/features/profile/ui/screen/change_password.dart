@@ -25,113 +25,116 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            AppTextButton(
-                buttonText: S.of(context).Cancel,
-                buttonWidth: 118,
-                backgroundColor: Colors.white,
-                borderColor: Color(0xffE5E7EB),
-                borderRadius: 8.r,
-                textStyle: TextStyles.font36BlackBold.copyWith(fontSize: 18.sp),
-                onPressed: () {
-                  context.pop();
-                }),
-            AppTextButton(
-                buttonText: S.of(context).UPdatePassword,
-                buttonWidth: 209,
-                borderColor: Color(0xffE5E7EB),
-                borderRadius: 8.r,
-                textStyle: TextStyles.font16BoldWhite,
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    ProfileCubit.get(context).ChangePassword(ChangePasswordModel(
-                      currentPassword: passwordController.text,
-                      newPassword: newPasswordController.text,
-                      newPasswordConfirmation: confirmPasswordController.text));
-                  }
+    return SafeArea(
+      bottom: true,
+      child: Scaffold(
+        bottomNavigationBar: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AppTextButton(
+                  buttonText: S.of(context).Cancel,
+                  buttonWidth: 118,
+                  backgroundColor: Colors.white,
+                  borderColor: Color(0xffE5E7EB),
+                  borderRadius: 8.r,
+                  textStyle: TextStyles.font36BlackBold.copyWith(fontSize: 18.sp),
+                  onPressed: () {
+                    context.pop();
+                  }),
+              AppTextButton(
+                  buttonText: S.of(context).UPdatePassword,
+                  buttonWidth: 209,
+                  borderColor: Color(0xffE5E7EB),
+                  borderRadius: 8.r,
+                  textStyle: TextStyles.font16BoldWhite,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      ProfileCubit.get(context).ChangePassword(ChangePasswordModel(
+                        currentPassword: passwordController.text,
+                        newPassword: newPasswordController.text,
+                        newPasswordConfirmation: confirmPasswordController.text));
+                    }
 
-                })
-          ],
+                  })
+            ],
+          ),
         ),
-      ),
-      backgroundColor: Color(0xffFAFAFA),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 22.h),
-          children: [
-            CustomAppBarScreen(title: S.of(context).ChangePassword),
-            verticalSpace(26),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 10.w),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    S.of(context).CurrentPassword,
-                    style: TextStyles.font16BlackRegular,
-                  ),
-                  verticalSpace(8),
-                  AppTextFormField(
-                    hintText: '',
-                    borderRadius: 8.r,
-                    backgroundColor: Colors.white,
-                    controller: passwordController,
-                    hintStyle: TextStyles.font16BlackRegular,
-                  ),
-                  verticalSpace(33),
-                  Text(
-                    S.of(context).newPassword,
-                    style: TextStyles.font16BlackRegular,
-                  ),
-                  verticalSpace(8),
-                  AppTextFormField(
-                    hintText: '',
-                    borderRadius: 8.r,
-                    backgroundColor: Colors.white,
-                    controller: newPasswordController,
-                    hintStyle: TextStyles.font16BlackRegular,
-                    validator: (value) {
+        backgroundColor: Color(0xffFAFAFA),
+        body: Form(
+          key: _formKey,
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 22.h),
+            children: [
+              CustomAppBarScreen(title: S.of(context).ChangePassword),
+              verticalSpace(26),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 10.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      S.of(context).CurrentPassword,
+                      style: TextStyles.font16BlackRegular,
+                    ),
+                    verticalSpace(8),
+                    AppTextFormField(
+                      hintText: '',
+                      borderRadius: 8.r,
+                      backgroundColor: Colors.white,
+                      controller: passwordController,
+                      hintStyle: TextStyles.font16BlackRegular,
+                    ),
+                    verticalSpace(33),
+                    Text(
+                      S.of(context).newPassword,
+                      style: TextStyles.font16BlackRegular,
+                    ),
+                    verticalSpace(8),
+                    AppTextFormField(
+                      hintText: '',
+                      borderRadius: 8.r,
+                      backgroundColor: Colors.white,
+                      controller: newPasswordController,
+                      hintStyle: TextStyles.font16BlackRegular,
+                      validator: (value) {
 
-                      if (value!.length < 6) {
-                        return S.of(context).PasswordTooShort;
-                      }
-                      return null;
-                    },
-                  ),
-                  verticalSpace(33),
-                  Text(
-                    S.of(context).ConfirmNewPassword,
-                    style: TextStyles.font16BlackRegular,
-                  ),
-                  verticalSpace(8),
-                  AppTextFormField(
-                    hintText: '',
-                    borderRadius: 8.r,
-                    backgroundColor: Colors.white,
-                    controller: confirmPasswordController,
-                    hintStyle: TextStyles.font16BlackRegular,
-                    validator: (value) {
-                      if (value != newPasswordController.text) {
-                        return S.of(context).PasswordNotMatched;
-                      }
-                      return null;
-                    },
-                  ),
-                ],
-              ),
-            )
-          ],
+                        if (value!.length < 6) {
+                          return S.of(context).PasswordTooShort;
+                        }
+                        return null;
+                      },
+                    ),
+                    verticalSpace(33),
+                    Text(
+                      S.of(context).ConfirmNewPassword,
+                      style: TextStyles.font16BlackRegular,
+                    ),
+                    verticalSpace(8),
+                    AppTextFormField(
+                      hintText: '',
+                      borderRadius: 8.r,
+                      backgroundColor: Colors.white,
+                      controller: confirmPasswordController,
+                      hintStyle: TextStyles.font16BlackRegular,
+                      validator: (value) {
+                        if (value != newPasswordController.text) {
+                          return S.of(context).PasswordNotMatched;
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

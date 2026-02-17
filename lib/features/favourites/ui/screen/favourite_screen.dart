@@ -30,7 +30,7 @@ class FavouriteScreen extends StatelessWidget {
           CustomAppBarScreen(
             title: S.of(context).Favorites,
           ),
-          verticalSpace(24),
+          //verticalSpace(14),
           BlocBuilder<FavCubit, FavState>(
             builder: (context, state) {
               if (state is GetFavsLoading&&FavCubit.get(context).favs.isEmpty) {

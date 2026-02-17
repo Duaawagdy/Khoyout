@@ -144,6 +144,11 @@
   "Signuptoenjoysmoother": "Sign up to enjoy a smoother shopping experience, save favorites, and track your orders easily.",
   "noProductForthisCategory": "No Product For This Category",
   "PriceRange": "PriceRange",
+  "MustnotBeEmpty": "Must not Be Empty",
+  "Processingyourorder": "Processing your order...",
+  "Pleasewaitmomentorder": "Please wait a moment while we securely confirm your order.",
+
+  "AddEGPtocartandgetfreeshipping": "Add 850 EGP to cart and get free shipping!  ",
   "language": "English"
 
 }

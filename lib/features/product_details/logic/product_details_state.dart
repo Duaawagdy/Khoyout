@@ -19,3 +19,4 @@ class GetReviewsLoading extends ProductDetailsState {}
 class GetReviewsError extends ProductDetailsState {}
 class GetReviewsSuccess extends ProductDetailsState {}
 class ToggleButtonFav extends ProductDetailsState {}
+class GetGuestModeState extends ProductDetailsState {}

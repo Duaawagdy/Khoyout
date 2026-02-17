@@ -5,6 +5,7 @@ import 'package:khouyot/features/product_details/data/model/product_details_mode
 import 'package:khouyot/features/product_details/data/repo/product_details_repo.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/db/cash_helper.dart';
 import '../data/model/reviews_response.dart';
 
 part 'product_details_state.dart';
@@ -26,6 +27,16 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
       productQuantity--;
     }
     emit(UpdatedQuantity());
+  }
+  bool guestMode=false;
+  Future<void> getGuestMode()async{
+    String mode= await CashHelper.getStringSecured(key: Keys.guestMode);
+    if(mode=='guest'){
+      guestMode=true;}
+    else{
+      guestMode=false;
+    }
+    emit(GetGuestModeState());
   }
   void selectColor(String name, List<VariantModel> variants) {
     for (final variant in variants) {

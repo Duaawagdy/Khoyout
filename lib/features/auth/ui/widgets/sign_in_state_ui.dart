@@ -38,6 +38,7 @@ class SignInStateUi extends StatelessWidget {
           //NavBarCubit.get(context).changeIndex(0,jumping: false);
           context.pushNamedAndRemoveUntil(
             Routes.navigationBar,
+            arguments: 0,
             predicate: (Route<dynamic> route) => false,
           );
         } else if (state is SignInFailure) {

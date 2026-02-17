@@ -5,15 +5,16 @@ import 'package:khouyot/features/forget_password/logic/forget_password_cubit.dar
 import 'package:khouyot/features/forget_password/ui/widgets/verify_otp_state_ui.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/utils/assets.dart';
+import '../../../core/localization/cubit/localization_cubit.dart';
 import '../../../core/theming/font_weight.dart';
 import '../../../core/theming/styles.dart';
 import '../../../core/widgets/app_otp_text_field.dart';
 import '../../../core/widgets/app_text_button.dart';
 import '../../../generated/l10n.dart';
 
-class VerifyResetPasswordScreen extends StatelessWidget{
+class VerifyResetPasswordScreen extends StatelessWidget {
   const VerifyResetPasswordScreen({super.key, required this.email});
-final String email;
+  final String email;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +49,8 @@ final String email;
                     ),
                     child: AnimatedContainer(
                       duration: Duration(milliseconds: 300),
-                      padding: EdgeInsets.only(top: 16.h, left: 18.w, right: 18.w),
+                      padding:
+                          EdgeInsets.only(top: 16.h, left: 18.w, right: 18.w),
                       decoration: BoxDecoration(
                         color: Color(0xffFAFAFA),
                         borderRadius: BorderRadius.only(
@@ -59,8 +61,9 @@ final String email;
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-
-                          VerifyResetPasswordColumn(email: email,)
+                          VerifyResetPasswordColumn(
+                            email: email,
+                          )
                         ],
                       ),
                     ),
@@ -74,13 +77,17 @@ final String email;
       ),
     );
   }
-
 }
+
 class VerifyResetPasswordColumn extends StatefulWidget {
-  const VerifyResetPasswordColumn({super.key, required this.email, });
+  const VerifyResetPasswordColumn({
+    super.key,
+    required this.email,
+  });
   final String email;
   @override
-  State<VerifyResetPasswordColumn> createState() => _VerifyResetPasswordColumnState();
+  State<VerifyResetPasswordColumn> createState() =>
+      _VerifyResetPasswordColumnState();
 }
 
 class _VerifyResetPasswordColumnState extends State<VerifyResetPasswordColumn> {
@@ -88,7 +95,7 @@ class _VerifyResetPasswordColumnState extends State<VerifyResetPasswordColumn> {
 
   List<TextEditingController> otpControllers = List.generate(
     4,
-        (index) => TextEditingController(),
+    (index) => TextEditingController(),
   );
   List<FocusNode> focusNodes = List.generate(4, (index) => FocusNode());
   @override
@@ -120,47 +127,70 @@ class _VerifyResetPasswordColumnState extends State<VerifyResetPasswordColumn> {
         ),
         Text(
           widget.email,
-          style: TextStyles.font20BlackMedium
-              .copyWith(fontSize: 12.sp),
+          style: TextStyles.font20BlackMedium.copyWith(fontSize: 12.sp),
         ),
         verticalSpace(24),
         SizedBox(
           width: 300.w,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(otpControllers.length, (index) {
-              return OtpInputField(
-                controller: otpControllers[index],
-                focusNode: focusNodes[index],
-                validator: (value) =>
-                value == null || value.isEmpty ? "!" : null,
-                onChanged: (value) {
-                  if (value.isEmpty) {
-                    ForgetPasswordCubit.get(context).focusPreviousField(context);
-                  } else {
-                    ForgetPasswordCubit.get(context).focusNextField(context);
-                  }
-                },
-              );
-            }),
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: List.generate(otpControllers.length, (index) {
+                return OtpInputField(
+                  controller: otpControllers[index],
+
+                  focusNode: focusNodes[index],
+                  onBackspacePressed: () {
+                    ForgetPasswordCubit.get(context).focusPreviousField(context); // 👈 go back on empty backspace
+                  },
+                  validator: (value) => value == null || value.isEmpty
+                      ? S.of(context).MustnotBeEmpty
+                      : null,
+                  onChanged: (value) {
+                    if (value.isEmpty) {
+                      ForgetPasswordCubit.get(context)
+                          .focusPreviousField(context);
+                    } else {
+                      ForgetPasswordCubit.get(context).focusNextField(context);
+                    }
+                  },
+                );
+              }),
+            ),
           ),
         ),
         verticalSpace(24),
         Row(
           children: [
-            Text(S.of(context).DontreceiveOTP,style: TextStyles.font16BlackRegular,),
-            Text(S.of(context).Resendcode,style: TextStyles.font16BoldWhite.copyWith(color: Color(0xff441618)),)
+            Text(
+              S.of(context).DontreceiveOTP,
+              style: TextStyles.font16BlackRegular,
+            ),
+            Text(
+              S.of(context).Resendcode,
+              style:
+                  TextStyles.font16BoldWhite.copyWith(color: Color(0xff441618)),
+            )
           ],
         ),
         verticalSpace(40),
-        AppTextButton(buttonText: S.of(context).Verify, textStyle: TextStyles.font20WhiteMedium.copyWith(fontWeight: FontWeightHelper.bold), onPressed: (){
-          ForgetPasswordCubit.get(context)
-              .verifyRestPasswordCode(
-          widget.email,
-               otpControllers
-                  .map((controller) => controller.text)
-                  .join());
-        }, buttonWidth: 339, buttonHeight: 48.h, backgroundColor: Color(0xff441618), borderRadius: 8.r,),
+        AppTextButton(
+          buttonText: S.of(context).Verify,
+          textStyle: TextStyles.font20WhiteMedium
+              .copyWith(fontWeight: FontWeightHelper.bold),
+          onPressed: () {
+            if(otpControllers[3].text!='') {
+              ForgetPasswordCubit.get(context).verifyRestPasswordCode(
+                widget.email,
+                otpControllers.map((controller) => controller.text).join());
+            }
+          },
+          buttonWidth: 339,
+          buttonHeight: 48.h,
+          backgroundColor: Color(0xff441618),
+          borderRadius: 8.r,
+        ),
         VerifyCodeOtpStateUi()
       ],
     );

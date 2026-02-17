@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "AddAddress": MessageLookupByLibrary.simpleMessage("إضافة عنوان"),
+        "AddEGPtocartandgetfreeshipping": MessageLookupByLibrary.simpleMessage(
+            "أضف 850 جنيه إلى السلة واحصل على شحن مجاني!"),
         "AddToCart": MessageLookupByLibrary.simpleMessage("أضف إلى السلة"),
         "AddToYourCart":
             MessageLookupByLibrary.simpleMessage("أضف إلى سلة التسوق"),
@@ -92,6 +94,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "Login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "Logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+        "MustnotBeEmpty":
+            MessageLookupByLibrary.simpleMessage("يجب ألا يكون فارغاً"),
         "MyAddresses": MessageLookupByLibrary.simpleMessage("عناويني"),
         "MyOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "Name": MessageLookupByLibrary.simpleMessage("الاسم"),
@@ -108,12 +112,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "PaymentMethod": MessageLookupByLibrary.simpleMessage("طريقة الدفع"),
         "Pickyourfavorites": MessageLookupByLibrary.simpleMessage(
             "اختر منتجاتك المفضلة واستمتع بتجربة تسوق سلسة."),
+        "Pleasewaitmomentorder": MessageLookupByLibrary.simpleMessage(
+            "يرجى الانتظار لحظة بينما نقوم بتأكيد طلبك بأمان."),
         "Pleasewaitmomentwhile": MessageLookupByLibrary.simpleMessage(
             "يرجى الانتظار لحظة بينما نقوم بتأكيد طلبك بشكل آمن."),
         "PriceRange": MessageLookupByLibrary.simpleMessage("السعر"),
         "PrivacyPolicy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
         "Processingyouorder":
             MessageLookupByLibrary.simpleMessage("جاري معالجة طلبك..."),
+        "Processingyourorder":
+            MessageLookupByLibrary.simpleMessage("جارٍ معالجة طلبك..."),
         "ProductInformation":
             MessageLookupByLibrary.simpleMessage("معلومات المنتج"),
         "Products": MessageLookupByLibrary.simpleMessage("المنتجات"),

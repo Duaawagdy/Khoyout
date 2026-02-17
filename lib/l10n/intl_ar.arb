@@ -143,6 +143,10 @@
   "Signuptoenjoysmoother": "سجل الآن للاستمتاع بتجربة تسوق أفضل، حفظ المفضلات، وتتبع طلباتك بسهولة.",
   "noProductForthisCategory": "لا توجد منتجات لهذا التصنيف",
   "PriceRange":"السعر",
+  "MustnotBeEmpty": "يجب ألا يكون فارغاً",
+  "Processingyourorder": "جارٍ معالجة طلبك...",
+  "Pleasewaitmomentorder": "يرجى الانتظار لحظة بينما نقوم بتأكيد طلبك بأمان.",
+  "AddEGPtocartandgetfreeshipping": "أضف 850 جنيه إلى السلة واحصل على شحن مجاني!",
 "language": "العربية"
 
 }

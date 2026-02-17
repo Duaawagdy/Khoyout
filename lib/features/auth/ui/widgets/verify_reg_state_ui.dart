@@ -41,6 +41,7 @@ class VerifyRegStateUi extends StatelessWidget {
           // );
           context.pushNamedAndRemoveUntil(
             Routes.navigationBar,
+            arguments: 0,
             predicate: (Route<dynamic> route) => false,
           );
           _showErrorBottomSheet(context, '');

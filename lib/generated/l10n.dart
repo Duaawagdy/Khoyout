@@ -1500,6 +1500,46 @@ class S {
     );
   }
 
+  /// `Must not Be Empty`
+  String get MustnotBeEmpty {
+    return Intl.message(
+      'Must not Be Empty',
+      name: 'MustnotBeEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Processing your order...`
+  String get Processingyourorder {
+    return Intl.message(
+      'Processing your order...',
+      name: 'Processingyourorder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please wait a moment while we securely confirm your order.`
+  String get Pleasewaitmomentorder {
+    return Intl.message(
+      'Please wait a moment while we securely confirm your order.',
+      name: 'Pleasewaitmomentorder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add 850 EGP to cart and get free shipping!  `
+  String get AddEGPtocartandgetfreeshipping {
+    return Intl.message(
+      'Add 850 EGP to cart and get free shipping!  ',
+      name: 'AddEGPtocartandgetfreeshipping',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `English`
   String get language {
     return Intl.message(

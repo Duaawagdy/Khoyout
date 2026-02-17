@@ -104,7 +104,8 @@ class _FeaturedProductCardState extends State<FeaturedProductCard> {
                       // Favorite button
                       Positioned(
                         top: 7.h,
-                        right: 6.w,
+                        right: isArabic?null:6.w,
+                        left: isArabic?6.w:null,
                         child: GestureDetector(
                           onTap: widget.onFavoriteTap,
                           child: CircleAvatar(
@@ -169,7 +170,7 @@ class _FeaturedProductCardState extends State<FeaturedProductCard> {
                       width: 126.w,
                       height: 34.h,
                       child: Text(
-                        widget.storeProduct.name ?? '',
+                        isArabic?widget.storeProduct.name ?? '':widget.storeProduct.slug??'',
                         overflow: TextOverflow.clip,
                         style: TextStyles.font14BlackRegular,
                       )),

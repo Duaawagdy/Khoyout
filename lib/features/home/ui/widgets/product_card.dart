@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:khouyot/features/home/data/model/product_model.dart';
 
 import '../../../../core/helpers/spacing.dart';
+import '../../../../core/localization/cubit/localization_cubit.dart';
 import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/font_weight.dart';
 import '../../../../core/theming/styles.dart';
@@ -53,6 +54,7 @@ class _ProductCardState extends State<ProductCard> {
 
     // Check if product has multiple images
     final hasMultipleImages = widget.storeProduct.images.length > 1;
+    final isArabic = LocalizationCubit.get(context).locale.languageCode == 'ar';
 
     return GestureDetector(
       onTap: widget.onTap,
@@ -112,7 +114,8 @@ class _ProductCardState extends State<ProductCard> {
                       // Favorite button
                       Positioned(
                         top: 7.h,
-                        right: 6.w,
+                        right: isArabic?null:6.w,
+                        left: isArabic?6.w:null,
                         child: GestureDetector(
                           onTap: widget.onFavoriteTap,
                           child: CircleAvatar(
@@ -177,7 +180,7 @@ class _ProductCardState extends State<ProductCard> {
                       width: 126.w,
                       height: 34.h,
                       child: Text(
-                        widget.storeProduct.name ?? '',
+                        isArabic?widget.storeProduct.name ?? '':widget.storeProduct.slug??'',
                         overflow: TextOverflow.clip,
                         style: TextStyles.font14BlackRegular,
                       )),
@@ -218,8 +221,11 @@ class _ProductCardState extends State<ProductCard> {
             decoration: BoxDecoration(
                 color: ColorsManager.kPrimaryColor,
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.r),
-                    bottomRight: Radius.circular(8.r))),
+                  topLeft: isArabic ? Radius.zero : Radius.circular(8.r),
+                  bottomRight: isArabic ? Radius.zero : Radius.circular(8.r),
+                  bottomLeft: isArabic ? Radius.circular(8.r) : Radius.zero,
+                  topRight: isArabic ? Radius.circular(8.r) : Radius.zero,
+                )),
             child: Text(
               '${presentationPrice.toStringAsFixed(0)}% ${S.of(context).off}',
               style:

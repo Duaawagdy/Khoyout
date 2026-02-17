@@ -40,7 +40,7 @@ class SearchCubit extends Cubit<SearchState> {
         filterModel = data;
         minPrice = data.price.min;
         maxPrice = data.price.max;
-        filteredProductsCount = data.stock.inStockVariants;
+        //filteredProductsCount = data.stock.inStockVariants;
         emit(GetAvailableFilterSuccess());
       },
     );

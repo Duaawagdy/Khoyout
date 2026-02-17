@@ -30,7 +30,7 @@ class GuestModeLanguageBar extends StatelessWidget {
               child: GestureDetector(
                 onTap: (){
                   CashHelper.setStringSecured(key: Keys.guestMode, value: 'guest');
-                  context.pushNamed(Routes.navigationBar);
+                  context.pushNamed(Routes.navigationBar,arguments: 0);
                 },
                 child: Container(
                   padding:

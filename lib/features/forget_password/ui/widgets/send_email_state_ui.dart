@@ -21,7 +21,7 @@ class SendEmailStateUi extends StatelessWidget {
             context: context,
             builder: (context) => const Center(
               child: CircularProgressIndicator(
-                color: ColorsManager.kPrimaryColor,
+                color: Colors.white,
               ),
             ),
           );
@@ -30,7 +30,7 @@ class SendEmailStateUi extends StatelessWidget {
           context.pop();
           //DioFactory.setTokenIntoHeaderAfterLogin(state.signUpResponse.token!);
           // NavBarCubit.get(context).changeIndex(0,jumping: false);
-          context.pushNamed(
+          context.pushReplacementNamed(
             Routes.verifyEmailCode,
             arguments: state.email
           );

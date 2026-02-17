@@ -174,7 +174,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       children: [
                         PaymentMethod(
                           image: 'assets/credit-card.png',
-                          method: 'Credit Card',
+                          method: S.of(context).CreditCard,
                           onTap: () {
                             CheckoutCubit.get(context)
                                 .selectPaymentMethod('cc');
@@ -184,7 +184,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                         PaymentMethod(
                           image: 'assets/wallet.png',
-                          method: 'Cash on Delivery',
+                          method: S.of(context).CashonDelivery,
                           onTap: () {
                             CheckoutCubit.get(context)
                                 .selectPaymentMethod('cod');

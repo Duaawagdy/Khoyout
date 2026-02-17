@@ -38,288 +38,291 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
         ),
       ),
       height: MediaQuery.of(context).size.height * 0.85,
-      child: Column(
-        children: [
-          verticalSpace(12),
-          // Header
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
-            color: Colors.white,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      S.of(context).Filter,
-                      style: TextStyles.font16BlackRegular.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Image.asset(
-                        AssetsData.squareClose,
-                        width: 36.w,
-                        height: 36.w,
-
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(height: 1, color: Color(0xffE5E7EB)),
-              ],
-            ),
-          ),
-
-
-          // Content
-          Expanded(
-            child: BlocBuilder<SearchCubit, SearchState>(
-              builder: (context, state) {
-                final cubit = SearchCubit.get(context);
-                final filters = cubit.filterModel;
-
-                if (state is GetAvailableFilterLoading) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: ColorsManager.kPrimaryColor,
-                    ),
-                  );
-                }
-
-                if (filters == null) {
-                  return Center(
-                    child: Text('No filters available'),
-                  );
-                }
-
-                return ListView(
-                  padding: EdgeInsets.symmetric(horizontal: 18.w),
-                  children: [
-                    verticalSpace(16),
-
-                    // Size Section
-                    if (filters.sizes.isNotEmpty) ...[
+      child: SafeArea(
+        bottom: true,
+        child: Column(
+          children: [
+            verticalSpace(12),
+            // Header
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       Text(
-                        'Size',
-                        style: TextStyles.font14BlackRegular.copyWith(
-                          fontWeight: FontWeight.w600,
+                        S.of(context).Filter,
+                        style: TextStyles.font16BlackRegular.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      verticalSpace(12),
-                      Wrap(
-                        spacing: 8.w,
-                        runSpacing: 8.h,
-                        children: filters.sizes.map((size) {
-                          return SizeChip(
-                            size: size,
-                            onTap: () => cubit.toggleSize(size),
-                          );
-                        }).toList(),
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Image.asset(
+                          AssetsData.squareClose,
+                          width: 36.w,
+                          height: 36.w,
+
+                        ),
                       ),
-                      verticalSpace(16),
                     ],
+                  ),
+                  Divider(height: 1, color: Color(0xffE5E7EB)),
+                ],
+              ),
+            ),
 
-                    // Stock Status Section
-                    // FilterExpandableSection(
-                    //   title: 'Stock status',
-                    //   isExpanded: showStockStatus,
-                    //   onTap: () {
-                    //     setState(() {
-                    //       showStockStatus = !showStockStatus;
-                    //     });
-                    //   },
-                    //   child: Column(
-                    //     children: [
-                    //       verticalSpace(8),
-                    //       StockStatusOption(
-                    //         title: 'Availability (${filters.stock.inStockVariants})',
-                    //         value: cubit.filterInStock,
-                    //         onChanged: (value) {
-                    //           cubit.toggleInStock();
-                    //         },
-                    //       ),
-                    //       StockStatusOption(
-                    //         title: 'On sale (18)',
-                    //         value: cubit.filterOnSale,
-                    //         onChanged: (value) {
-                    //           cubit.toggleOnSale();
-                    //         },
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // verticalSpace(8),
 
-                    // Categories Section
-                    FilterExpandableSection(
-                      title: S.of(context).Categories,
-                      isExpanded: showCategories,
-                      onTap: () {
-                        setState(() {
-                          showCategories = !showCategories;
-                        });
-                      },
-                      child: Column(
-                        children: filters.categories.map((category) {
-                          return CategoryOption(
-                            category: category,
-                            isSelected: cubit.selectedCategoryIds.contains(category.id),
-                            onTap: () => cubit.toggleCategory(category.id),
-                          );
-                        }).toList(),
+            // Content
+            Expanded(
+              child: BlocBuilder<SearchCubit, SearchState>(
+                builder: (context, state) {
+                  final cubit = SearchCubit.get(context);
+                  final filters = cubit.filterModel;
+
+                  if (state is GetAvailableFilterLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: ColorsManager.kPrimaryColor,
                       ),
-                    ),
-                    verticalSpace(8),
+                    );
+                  }
 
-                    // Colors Section
-                    FilterExpandableSection(
-                      title: S.of(context).Colors,
-                      isExpanded: showColors,
-                      onTap: () {
-                        setState(() {
-                          showColors = !showColors;
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 12.h),
-                        child: Wrap(
-                          spacing: 12.w,
-                          runSpacing: 12.h,
-                          children: filters.colors.map((color) {
-                            return ColorOption(
-                              color: color,
-                              onTap: () => cubit.toggleColor(color),
+                  if (filters == null) {
+                    return Center(
+                      child: Text('No filters available'),
+                    );
+                  }
+
+                  return ListView(
+                    padding: EdgeInsets.symmetric(horizontal: 18.w),
+                    children: [
+                      verticalSpace(16),
+
+                      // Size Section
+                      if (filters.sizes.isNotEmpty) ...[
+                        Text(
+                          'Size',
+                          style: TextStyles.font14BlackRegular.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        verticalSpace(12),
+                        Wrap(
+                          spacing: 8.w,
+                          runSpacing: 8.h,
+                          children: filters.sizes.map((size) {
+                            return SizeChip(
+                              size: size,
+                              onTap: () => cubit.toggleSize(size),
+                            );
+                          }).toList(),
+                        ),
+                        verticalSpace(16),
+                      ],
+
+                      // Stock Status Section
+                      // FilterExpandableSection(
+                      //   title: 'Stock status',
+                      //   isExpanded: showStockStatus,
+                      //   onTap: () {
+                      //     setState(() {
+                      //       showStockStatus = !showStockStatus;
+                      //     });
+                      //   },
+                      //   child: Column(
+                      //     children: [
+                      //       verticalSpace(8),
+                      //       StockStatusOption(
+                      //         title: 'Availability (${filters.stock.inStockVariants})',
+                      //         value: cubit.filterInStock,
+                      //         onChanged: (value) {
+                      //           cubit.toggleInStock();
+                      //         },
+                      //       ),
+                      //       StockStatusOption(
+                      //         title: 'On sale (18)',
+                      //         value: cubit.filterOnSale,
+                      //         onChanged: (value) {
+                      //           cubit.toggleOnSale();
+                      //         },
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // verticalSpace(8),
+
+                      // Categories Section
+                      FilterExpandableSection(
+                        title: S.of(context).Categories,
+                        isExpanded: showCategories,
+                        onTap: () {
+                          setState(() {
+                            showCategories = !showCategories;
+                          });
+                        },
+                        child: Column(
+                          children: filters.categories.map((category) {
+                            return CategoryOption(
+                              category: category,
+                              isSelected: cubit.selectedCategoryIds.contains(category.id),
+                              onTap: () => cubit.toggleCategory(category.id),
                             );
                           }).toList(),
                         ),
                       ),
-                    ),
-                    verticalSpace(8),
+                      verticalSpace(8),
 
-                    // Collections Section
-                    // FilterExpandableSection(
-                    //   title: 'Collections',
-                    //   isExpanded: showCollections,
-                    //   onTap: () {
-                    //     setState(() {
-                    //       showCollections = !showCollections;
-                    //     });
-                    //   },
-                    //   child: Container(),
-                    // ),
-                    // verticalSpace(8),
-
-                    // Ratings Section
-                    // FilterExpandableSection(
-                    //   title: 'Ratings',
-                    //   isExpanded: showRatings,
-                    //   onTap: () {
-                    //     setState(() {
-                    //       showRatings = !showRatings;
-                    //     });
-                    //   },
-                    //   child: Container(),
-                    // ),
-                    // verticalSpace(8),
-
-                    // Price Range Section
-                    FilterExpandableSection(
-                      title: S.of(context).PriceRange,
-                      isExpanded: showPriceRange,
-                      onTap: () {
-                        setState(() {
-                          showPriceRange = !showPriceRange;
-                        });
-                      },
-                      child: PriceRangeSlider(
-                        min: filters.price.min,
-                        max: filters.price.max,
-                        currentMin: cubit.minPrice,
-                        currentMax: cubit.maxPrice,
-                        onChanged: (min, max) {
-                          cubit.updatePriceRange(min, max);
+                      // Colors Section
+                      FilterExpandableSection(
+                        title: S.of(context).Colors,
+                        isExpanded: showColors,
+                        onTap: () {
+                          setState(() {
+                            showColors = !showColors;
+                          });
                         },
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 12.h),
+                          child: Wrap(
+                            spacing: 12.w,
+                            runSpacing: 12.h,
+                            children: filters.colors.map((color) {
+                              return ColorOption(
+                                color: color,
+                                onTap: () => cubit.toggleColor(color),
+                              );
+                            }).toList(),
+                          ),
+                        ),
                       ),
-                    ),
-                    verticalSpace(100),
-                  ],
-                );
-              },
-            ),
-          ),
+                      verticalSpace(8),
 
-          // Bottom Buttons
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: Offset(0, -2),
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                // Reset Button
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      SearchCubit.get(context).clearFilters();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 14.h),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Color(0xff441618)),
-                        borderRadius: BorderRadius.circular(8.r),
+                      // Collections Section
+                      // FilterExpandableSection(
+                      //   title: 'Collections',
+                      //   isExpanded: showCollections,
+                      //   onTap: () {
+                      //     setState(() {
+                      //       showCollections = !showCollections;
+                      //     });
+                      //   },
+                      //   child: Container(),
+                      // ),
+                      // verticalSpace(8),
+
+                      // Ratings Section
+                      // FilterExpandableSection(
+                      //   title: 'Ratings',
+                      //   isExpanded: showRatings,
+                      //   onTap: () {
+                      //     setState(() {
+                      //       showRatings = !showRatings;
+                      //     });
+                      //   },
+                      //   child: Container(),
+                      // ),
+                      // verticalSpace(8),
+
+                      // Price Range Section
+                      FilterExpandableSection(
+                        title: S.of(context).PriceRange,
+                        isExpanded: showPriceRange,
+                        onTap: () {
+                          setState(() {
+                            showPriceRange = !showPriceRange;
+                          });
+                        },
+                        child: PriceRangeSlider(
+                          min: filters.price.min,
+                          max: filters.price.max,
+                          currentMin: cubit.minPrice,
+                          currentMax: cubit.maxPrice,
+                          onChanged: (min, max) {
+                            cubit.updatePriceRange(min, max);
+                          },
+                        ),
                       ),
-                      child: Text(
-                        'Reset',
-                        textAlign: TextAlign.center,
-                        style: TextStyles.font16BoldWhite.copyWith(
-                          color: Color(0xff441618),
+                      verticalSpace(100),
+                    ],
+                  );
+                },
+              ),
+            ),
+
+            // Bottom Buttons
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: Offset(0, -2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  // Reset Button
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        SearchCubit.get(context).clearFilters();
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 14.h),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Color(0xff441618)),
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
+                        child: Text(
+                          'Reset',
+                          textAlign: TextAlign.center,
+                          style: TextStyles.font16BoldWhite.copyWith(
+                            color: Color(0xff441618),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                horizontalSpace(12),
-                // Apply Button
-                Expanded(
-                  flex: 2,
-                  child: GestureDetector(
-                    onTap: () {
-                      SearchCubit.get(context).applyFilters();
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 14.h),
-                      decoration: BoxDecoration(
-                        color: Color(0xff441618),
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      child: BlocBuilder<SearchCubit, SearchState>(
-                        builder: (context, state) {
-                          final itemCount = SearchCubit.get(context).filteredProductsCount;
-                          return Text(
-                            'Apply • $itemCount items',
-                            textAlign: TextAlign.center,
-                            style: TextStyles.font16BoldWhite,
-                          );
-                        },
+                  horizontalSpace(12),
+                  // Apply Button
+                  Expanded(
+                    flex: 2,
+                    child: GestureDetector(
+                      onTap: () {
+                        SearchCubit.get(context).applyFilters();
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 14.h),
+                        decoration: BoxDecoration(
+                          color: Color(0xff441618),
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
+                        child: BlocBuilder<SearchCubit, SearchState>(
+                          builder: (context, state) {
+                            final itemCount = SearchCubit.get(context).filteredProductsCount;
+                            return Text(
+                              'Apply • $itemCount items',
+                              textAlign: TextAlign.center,
+                              style: TextStyles.font16BoldWhite,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

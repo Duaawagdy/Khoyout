@@ -100,7 +100,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<NavBarCubit>(),
-            child: NavigationBarApp(),
+            child: NavigationBarApp(index: settings.arguments as int,),
           ),
         );
       case Routes.searchScreen:
@@ -121,6 +121,7 @@ class AppRouter {
           builder: (_) => MultiBlocProvider(
             providers: [
               BlocProvider.value(value: getIt<FavCubit>()..getFav()),
+              BlocProvider.value(value: getIt<SearchCubit>()),
             ],
             child: ViewAllProduct(
               title: args['title'] as String,
@@ -161,6 +162,8 @@ class AppRouter {
               ),
               BlocProvider.value(
                 value: getIt<FavCubit>(),
+              ), BlocProvider.value(
+                value: getIt<NavBarCubit>(),
               ),
             ],
             child: ProductDetailsScreen(

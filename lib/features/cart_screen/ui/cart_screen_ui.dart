@@ -10,6 +10,7 @@ import 'package:khouyot/core/widgets/image_network.dart';
 import 'package:khouyot/core/widgets/price_display.dart';
 import 'package:khouyot/features/cart_screen/data/model/cart_reponse_model.dart';
 import 'package:khouyot/features/cart_screen/logic/cart_cubit.dart';
+import 'package:khouyot/features/nav_bar/logic/nav_bar_cubit.dart';
 
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theming/colors.dart';
@@ -77,7 +78,9 @@ class _CartScreenState extends State<CartScreen> {
                 AppTextButton(
                     buttonText: S.of(context).BrowseProducts,
                     textStyle: TextStyles.font16BoldWhite,
-                    onPressed: () {})
+                    onPressed: () {
+                      NavBarCubit.get(context).changeIndex(0);
+                    })
               ],
             ),
           );
@@ -466,7 +469,7 @@ class FreeDeleveryProgress extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Add 850 EGP to cart and get free shipping!  ",
+                      S.of(context).AddEGPtocartandgetfreeshipping,
                       style: TextStyles.font18BlackMedium
                           .copyWith(fontSize: 12.sp),
                     ),

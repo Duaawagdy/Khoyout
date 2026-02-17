@@ -27,43 +27,42 @@ class ForgetPasswordScreen extends StatelessWidget {
                     image: AssetImage(AssetsData.logo), fit: BoxFit.cover)),
           ),
           SafeArea(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.only(start: 18.w, top: 20.h),
-                child: Align(
-                  alignment: AlignmentDirectional.topStart,
-                  child: GestureDetector(
-                      onTap: () {
-                        context.pop();
-                      },
-                      child: Icon(
-                        Icons.arrow_back_rounded,
-                        size: 20.sp,
-                        color: Colors.white,
-                      )),
+              child: SingleChildScrollView(
+                child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.only(start: 18.w, top: 20.h),
+                  child: Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: GestureDetector(
+                        onTap: () {
+                          context.pop();
+                        },
+                        child: Icon(
+                          Icons.arrow_back_rounded,
+                          size: 20.sp,
+                          color: Colors.white,
+                        )),
+                  ),
                 ),
-              ),
-              verticalSpace(86),
-              Text('KHOUYOT',
-                  style: TextStyles.font30WhiteSemiBold
-                      .copyWith(color: Colors.white)),
-              Text('HIJAB & MORE', style: TextStyles.font20WhiteMedium),
-              verticalSpace(12),
-              Text(
-                S.of(context).ForgotPassword,
-                style: TextStyles.font24BlackBold.copyWith(color: Colors.white),
-              ),
-              verticalSpace(8),
-              Text(
-                S.of(context).EnteryourEmail,
-                style: TextStyles.font16WhiteRegular.copyWith(fontSize: 12.sp),
-              ),
-              verticalSpace(140),
-              ForgetPasswordContainer(),
-            ],
-          ))
+                verticalSpace(86),
+                Image.asset("assets/logo.png",width: 150.w,),
+                verticalSpace(12),
+                Text(
+                  S.of(context).ForgotPassword,
+                  style: TextStyles.font24BlackBold.copyWith(color: Colors.white),
+                ),
+                verticalSpace(8),
+                Text(
+                  S.of(context).EnteryourEmail,
+                  style: TextStyles.font16WhiteRegular.copyWith(fontSize: 12.sp),
+                ),
+                verticalSpace(140),
+                ForgetPasswordContainer(),
+                            ],
+                          ),
+              ))
         ],
       ),
     );
@@ -81,40 +80,42 @@ class ForgetPasswordContainer extends StatefulWidget {
 
 class _ForgetPasswordContainerState extends State<ForgetPasswordContainer> {
   TextEditingController emailController=TextEditingController();
+  final formKey= GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      padding: EdgeInsets.only(top: 8.h),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.r),
+          topRight: Radius.circular(20.r),
+        ),
+        gradient: LinearGradient(
+          end: Alignment.topRight,
+          begin: Alignment.topLeft,
+          colors: [
+            ColorsManager.seconderyTextColor,
+            ColorsManager.lighKPrimaryColor,
+          ],
+        ),
+      ),
       child: AnimatedContainer(
         duration: Duration(milliseconds: 300),
-        padding: EdgeInsets.only(top: 8.h),
+        padding: EdgeInsets.only(top: 16.h, left: 18.w, right: 18.w),
         decoration: BoxDecoration(
+          color: Color(0xffFAFAFA),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.r),
             topRight: Radius.circular(20.r),
           ),
-          gradient: LinearGradient(
-            end: Alignment.topRight,
-            begin: Alignment.topLeft,
-            colors: [
-              ColorsManager.seconderyTextColor,
-              ColorsManager.lighKPrimaryColor,
-            ],
-          ),
         ),
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: 300),
-          padding: EdgeInsets.only(top: 16.h, left: 18.w, right: 18.w),
-          decoration: BoxDecoration(
-            color: Color(0xffFAFAFA),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.r),
-              topRight: Radius.circular(20.r),
-            ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Column(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Form(
+              key: formKey,
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   AuthInput(
@@ -128,7 +129,9 @@ class _ForgetPasswordContainerState extends State<ForgetPasswordContainer> {
                     textStyle: TextStyles.font16BoldWhite
                         ,
                     onPressed: () {
-                      ForgetPasswordCubit.get(context).forgetPassword(emailController.text);
+                      if(formKey.currentState!.validate()) {
+                        ForgetPasswordCubit.get(context).forgetPassword(emailController.text);
+                      }
                     },
                     buttonWidth: 339,
                     buttonHeight: 43.h,
@@ -147,11 +150,12 @@ class _ForgetPasswordContainerState extends State<ForgetPasswordContainer> {
                     backgroundColor: Colors.transparent,
                     borderRadius: 8.r,
                   ),
+                      verticalSpace(80),
                   SendEmailStateUi()
                 ],
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
