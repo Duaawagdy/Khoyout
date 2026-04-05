@@ -104,7 +104,7 @@ class ProductModel {
           .toList(),
       sizes: json['sizes'] ?? [],
       basePrice: json['base_price'] ?? 0,
-      discountPrice: json['discount_price'],
+      discountPrice: json['discount_price']??0,
       variants: (json['variants'] as List? ?? [])
           .map((e) => VariantModel.fromJson(e))
           .toList(),
@@ -264,8 +264,8 @@ class VariantOptionModel {
     if (json == null) return VariantOptionModel();
 
     return VariantOptionModel(
-      option: json['option'],
-      value: json['value'],
+      option: json['option'].toString().trim(),
+      value: json['value'].toString().trim(),
       valueAr: json['value_ar'],
       meta: VariantMetaModel.fromJson(json['meta']),
     );

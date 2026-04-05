@@ -306,27 +306,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             padding: EdgeInsetsDirectional.only(start: 9.w),
                             child: Row(
                               children: [
+                                // ✅ FIX: use discount_price only if it's > 0, otherwise show base_price
                                 Text(
-                                    '${ProductDetailsCubit.get(context).productDetailsModel.data?.discountPrice ?? ProductDetailsCubit.get(context).productDetailsModel.data?.basePrice} ',
-                                    style: TextStyles.font24BlackBold
-                                        .copyWith(fontSize: 20.sp)),
-                                Text(S.of(context).EGP,
-                                    style: TextStyles.font16BoldWhite
-                                        .copyWith(color: Color(0xff922F34))),
+                                  '${(ProductDetailsCubit.get(context).productDetailsModel.data?.discountPrice ?? 0) > 0
+                                      ? ProductDetailsCubit.get(context).productDetailsModel.data?.discountPrice
+                                      : ProductDetailsCubit.get(context).productDetailsModel.data?.basePrice} ',
+                                  style: TextStyles.font24BlackBold.copyWith(fontSize: 20.sp),
+                                ),
+                                Text(
+                                  S.of(context).EGP,
+                                  style: TextStyles.font16BoldWhite.copyWith(color: Color(0xff922F34)),
+                                ),
                                 horizontalSpace(4),
-                                ProductDetailsCubit.get(context)
-                                            .productDetailsModel
-                                            .data
-                                            ?.discountPrice ==
-                                        null
-                                    ? SizedBox.shrink()
-                                    : Text(
-                                        '${ProductDetailsCubit.get(context).productDetailsModel.data?.basePrice} ${S.of(context).EGP}',
-                                        style: TextStyles.font12GryBold.copyWith(
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                            fontSize: 14.sp),
-                                      )
+                                // ✅ FIX: only show strikethrough base_price when discount actually exists
+                                (ProductDetailsCubit.get(context).productDetailsModel.data?.discountPrice ?? 0) > 0
+                                    ? Text(
+                                  '${ProductDetailsCubit.get(context).productDetailsModel.data?.basePrice} ${S.of(context).EGP}',
+                                  style: TextStyles.font12GryBold.copyWith(
+                                    decoration: TextDecoration.lineThrough,
+                                    fontSize: 14.sp,
+                                  ),
+                                )
+                                    : const SizedBox.shrink(),
                               ],
                             ),
                           ),

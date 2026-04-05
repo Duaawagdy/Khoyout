@@ -66,49 +66,42 @@ minLines: 1,
         controller: controller,
         focusNode: focusNode,
         decoration: InputDecoration(
-          isDense: true,
-          contentPadding: contentPadding ??
-              EdgeInsets.only(left: 10.w, right: 10.w, bottom: 25.h,),
-          focusedBorder: focusedBorder ??
-              OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: ColorsManager.kPrimaryColor,
-                  width: 1.3,
-                ),
-                borderRadius: BorderRadius.circular(borderRadius?.r ?? 16.0.r),
+        isDense: true,
+        contentPadding: contentPadding ??
+            EdgeInsets.only(left: 10.w, right: 10.w, bottom: 25.h),
+        focusedBorder: focusedBorder ??
+            OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: ColorsManager.kPrimaryColor,
+                width: 1.3,
               ),
-          enabledBorder: enabledBorder ??
-              OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: ColorsManager.grey,
-                  width: 1.3,
-                ),
-                borderRadius: BorderRadius.circular(borderRadius?.r ?? 16.0.r),
+              borderRadius: BorderRadius.circular(borderRadius?.r ?? 16.0.r),
+            ),
+        enabledBorder: enabledBorder ??
+            OutlineInputBorder(
+              borderSide: BorderSide(
+                color: ColorsManager.grey,
+                width: 1.3,
               ),
-          errorBorder: OutlineInputBorder(
-
-            borderSide: const BorderSide(
-              color: Colors.red,
-             // width: 1.3,
+              borderRadius: BorderRadius.circular(borderRadius?.r ?? 16.0.r),
             ),
-            borderRadius: BorderRadius.circular(borderRadius?.r ?? 16.0.r),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.red,
-             // width: 1.3,
-            ),
-            borderRadius: BorderRadius.circular(borderRadius?.r ?? 16.0.r),
-          ),
-          hintStyle: hintStyle ?? TextStyles.font32BlueBold,
-          hintText: hintText,
-          suffixIcon: suffixIcon,
-
-          prefixIcon: prefexIcon,
-          prefixIconConstraints: BoxConstraints(minWidth: 16.w,maxHeight: 16.h),
-          fillColor: backgroundColor ?? ColorsManager.grey,
-          filled: true,
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.red),
+          borderRadius: BorderRadius.circular(borderRadius?.r ?? 16.0.r),
         ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.red),
+          borderRadius: BorderRadius.circular(borderRadius?.r ?? 16.0.r),
+        ),
+        hintStyle: hintStyle ?? TextStyles.font32BlueBold,
+        hintText: hintText,
+        suffixIcon: suffixIcon,
+        // ✅ prefix sits inline with text — perfectly aligned
+        prefix: prefexIcon,
+        // ✅ removed prefixIconConstraints — was clipping to maxHeight:16
+        fillColor: backgroundColor ?? ColorsManager.grey,
+        filled: true,
+      ),
         obscureText: isObscureText ?? false,
         style: hintStyle??TextStyles.font16WhiteRegular,
         validator: validator ??

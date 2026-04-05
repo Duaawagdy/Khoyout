@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.mzkhoyout.khoyout"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -22,7 +22,7 @@ android {
         multiDexEnabled true
         applicationId = "com.mzkhoyout.khoyout"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 14
         versionName = "1.0"
     }

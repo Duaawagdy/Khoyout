@@ -3,9 +3,9 @@ class AddCartResponse {
   final int quantity;
   final CartProduct product;
   final CartVariant variant;
-  final num unitPriceUsd;
+  //final num unitPriceUsd;
   final num unitPriceEgp;
-  final num lineTotalUsd;
+  //final num lineTotalUsd;
   final num lineTotalEgp;
 
   AddCartResponse({
@@ -13,9 +13,9 @@ class AddCartResponse {
     required this.quantity,
     required this.product,
     required this.variant,
-    required this.unitPriceUsd,
+
     required this.unitPriceEgp,
-    required this.lineTotalUsd,
+
     required this.lineTotalEgp,
   });
 
@@ -25,9 +25,9 @@ class AddCartResponse {
       quantity: json['quantity'],
       product: CartProduct.fromJson(json['product']),
       variant: CartVariant.fromJson(json['variant']),
-      unitPriceUsd: json['unit_price_usd'],
-      unitPriceEgp: json['unit_price_egp'],
-      lineTotalUsd: json['line_total_usd'],
+      //unitPriceUsd: json['unit_price_usd'],
+      unitPriceEgp: json['unit_price'],
+     // lineTotalUsd: json['line_total_usd'],
       lineTotalEgp: json['line_total_egp'],
     );
   }
@@ -38,9 +38,7 @@ class AddCartResponse {
       'quantity': quantity,
       'product': product.toJson(),
       'variant': variant.toJson(),
-      'unit_price_usd': unitPriceUsd,
       'unit_price_egp': unitPriceEgp,
-      'line_total_usd': lineTotalUsd,
       'line_total_egp': lineTotalEgp,
     };
   }
@@ -103,7 +101,7 @@ class CartVariant {
       stock: json['stock'],
       stockStatus: json['stock_status'],
       options: json['options'] ?? [],
-      colorHex: json['color_hex'],
+      colorHex: json['color_hex']??'',
     );
   }
 

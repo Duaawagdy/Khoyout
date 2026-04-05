@@ -22,43 +22,46 @@ class FavouriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffFAFAFA),
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
-        children: [
-          CustomAppBarScreen(
-            title: S.of(context).Favorites,
-          ),
-          //verticalSpace(14),
-          BlocBuilder<FavCubit, FavState>(
-            builder: (context, state) {
-              if (state is GetFavsLoading&&FavCubit.get(context).favs.isEmpty) {
-                return Center(
-                    child: CircularProgressIndicator(
-                  color: ColorsManager.kPrimaryColor,
-                ));
-              } else if(FavCubit.get(context).favs.isEmpty){
-                return EmptyWishlist();
-              }else {
-                return GridView.builder(
-                    itemBuilder: (context, index) {
-                      return FavouriteItem(
-                        storeProduct: FavCubit.get(context).favs[index],
-                      );
-                    },
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 24.h,
-                        crossAxisSpacing: 15.w,
-                        childAspectRatio: 0.645),
-                    itemCount: FavCubit.get(context).favs.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics());
-              }
-            },
-          )
-        ],
+    return SafeArea(
+      bottom: true,
+      child: Scaffold(
+        backgroundColor: Color(0xffFAFAFA),
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
+          children: [
+            CustomAppBarScreen(
+              title: S.of(context).Favorites,
+            ),
+            //verticalSpace(14),
+            BlocBuilder<FavCubit, FavState>(
+              builder: (context, state) {
+                if (state is GetFavsLoading&&FavCubit.get(context).favs.isEmpty) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                    color: ColorsManager.kPrimaryColor,
+                  ));
+                } else if(FavCubit.get(context).favs.isEmpty){
+                  return EmptyWishlist();
+                }else {
+                  return GridView.builder(
+                      itemBuilder: (context, index) {
+                        return FavouriteItem(
+                          storeProduct: FavCubit.get(context).favs[index],
+                        );
+                      },
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 24.h,
+                          crossAxisSpacing: 15.w,
+                          childAspectRatio: 0.645),
+                      itemCount: FavCubit.get(context).favs.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics());
+                }
+              },
+            )
+          ],
+        ),
       ),
     );
   }

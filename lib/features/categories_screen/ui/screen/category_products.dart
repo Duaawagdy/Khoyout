@@ -31,82 +31,85 @@ class _CategoryProductsState extends State<CategoryProducts> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffFAFAFA),
-      body: SafeArea(
-        child: ListView(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18.w),
-              child: CustomAppBarScreen(title: widget.title),
-            ),
-            verticalSpace(16),
-            BlocBuilder<CategoriesCubit, CategoriesState>(
-              builder: (context, state) {
-                if (state is GetCategoriesLoading) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: ColorsManager.kPrimaryColor,
-                    ),
-                  );
-                } else if (CategoriesCubit.get(context).products.isEmpty) {
-                  return Center(
-                    child: Text(
-                      S.of(context).noProductForthisCategory,
-                      style: TextStyles.font16BlackRegular.copyWith(color: Colors.black),
-                    ),
-                  );
-                } else {
-                  final products = CategoriesCubit.get(context).products;
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18.w),
-                    child: BlocBuilder<FavCubit, FavState>(
-                      builder: (context, state) {
-                        return GridView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          // Important for ListView
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 18.w,
-                            mainAxisSpacing: 10.h,
-                            childAspectRatio: 0.78,
-                          ),
-                          shrinkWrap: true,
-                          itemCount: products.length,
-                          // This should now be safe
-                          itemBuilder: (context, index) {
-                            final isFavorite = FavCubit.get(context)
-                                .favs
-                                .any((e) => e.id == products[index].id);
-                            // Safety check
-                            if (index >= products.length) {
-                              return SizedBox.shrink();
-                            }
+    return SafeArea(
+      bottom: true,
+      child: Scaffold(
+        backgroundColor: Color(0xffFAFAFA),
+        body: SafeArea(
+          child: ListView(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18.w),
+                child: CustomAppBarScreen(title: widget.title),
+              ),
+              verticalSpace(16),
+              BlocBuilder<CategoriesCubit, CategoriesState>(
+                builder: (context, state) {
+                  if (state is GetCategoriesLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: ColorsManager.kPrimaryColor,
+                      ),
+                    );
+                  } else if (CategoriesCubit.get(context).products.isEmpty) {
+                    return Center(
+                      child: Text(
+                        S.of(context).noProductForthisCategory,
+                        style: TextStyles.font16BlackRegular.copyWith(color: Colors.black),
+                      ),
+                    );
+                  } else {
+                    final products = CategoriesCubit.get(context).products;
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 18.w),
+                      child: BlocBuilder<FavCubit, FavState>(
+                        builder: (context, state) {
+                          return GridView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            // Important for ListView
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 18.w,
+                              mainAxisSpacing: 10.h,
+                              childAspectRatio: 0.78,
+                            ),
+                            shrinkWrap: true,
+                            itemCount: products.length,
+                            // This should now be safe
+                            itemBuilder: (context, index) {
+                              final isFavorite = FavCubit.get(context)
+                                  .favs
+                                  .any((e) => e.id == products[index].id);
+                              // Safety check
+                              if (index >= products.length) {
+                                return SizedBox.shrink();
+                              }
 
-                            return ProductCard(
-                              itemQuantity: 0,
-                              backgroundColor: Colors.white,
-                              onTap: () {
-                                context.pushNamed(Routes.productScreen,
-                                    arguments: products[index].id);
-                              },
-                              isFavorite: isFavorite,
-                              onFavoriteTap: () {
-                                FavCubit.get(context)
-                                    .toggleFav(products[index].id ?? 0);
-                              },
-                              storeProduct: products[index],
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  );
-                }
-              },
-            )
-          ],
+                              return ProductCard(
+                                itemQuantity: 0,
+                                backgroundColor: Colors.white,
+                                onTap: () {
+                                  context.pushNamed(Routes.productScreen,
+                                      arguments: products[index].id);
+                                },
+                                isFavorite: isFavorite,
+                                onFavoriteTap: () {
+                                  FavCubit.get(context)
+                                      .toggleFav(products[index].id ?? 0);
+                                },
+                                storeProduct: products[index],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  }
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -20,83 +20,86 @@ class MyOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffFAFAFA),
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 18.w),
-        children: [
-          verticalSpace(22),
-          CustomAppBarScreen(title: S.of(context).MyOrders),
-          verticalSpace(22),
-          BlocBuilder<OrdersCubit,OrdersState>(
-  builder: (context, state) {
-    final cubit= OrdersCubit.get(context);
-    return SizedBox(
-            height: 37.h,
-            child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                separatorBuilder: (context, index) => horizontalSpace(8),
-                shrinkWrap: true,
-                itemCount: cubit.status.length,
-                itemBuilder: (context, index) {
-                  
-                  return GestureDetector(
-                      onTap:(){
-                        cubit.selectStatus(index);
-                      
-                      },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 23.w, vertical: 8.h),
-                      decoration: BoxDecoration(
-                          color: cubit.selectedIndex==index?Color(0xffF8E8E9):Colors.transparent,
-                          border: Border.all(
-                            color: cubit.selectedIndex==index?Color(0xff6C2326):Color(0xffE5E7EB),
-                          ),
-                          borderRadius: BorderRadius.circular(8.r)),
-                      child: Text(
-                        OrdersCubit.get(context).status[index],
-                        style: TextStyles.font12GryBold
-                            .copyWith(fontWeight: FontWeightHelper.medium),
-                      ),
-                    ),
-                  );
-                }),
-          );
-  },
-),
-          BlocBuilder<OrdersCubit, OrdersState>(
-            builder: (context, state) {
-              if (state is OrdersLoading) {
-                return Padding(
-                  padding: EdgeInsets.only(top: 18.0.h),
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              }
-              return ListView.separated(
-                  separatorBuilder: (context, index) => verticalSpace(16),
-                  itemCount:
-                      OrdersCubit.get(context).filterdProduct.length,
+    return SafeArea(
+      bottom: true,
+      child: Scaffold(
+        backgroundColor: Color(0xffFAFAFA),
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 18.w),
+          children: [
+            verticalSpace(22),
+            CustomAppBarScreen(title: S.of(context).MyOrders),
+            verticalSpace(22),
+            BlocBuilder<OrdersCubit,OrdersState>(
+        builder: (context, state) {
+      final cubit= OrdersCubit.get(context);
+      return SizedBox(
+              height: 37.h,
+              child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  separatorBuilder: (context, index) => horizontalSpace(8),
                   shrinkWrap: true,
-                  physics: ScrollPhysics(),
+                  itemCount: cubit.status.length,
                   itemBuilder: (context, index) {
+
                     return GestureDetector(
-                      onTap: (){
-                        context.pushNamed(Routes.myOrdertDetailsScreen,arguments: OrdersCubit.get(context).filterdProduct[index]);
-                      },
-                      child: OrdersItemContainer(
-                        myOrderModel:
-                        OrdersCubit.get(context)
-                            .filterdProduct[index]
-                            .orderItems[0],
-                        items: OrdersCubit.get(context).filterdProduct[index].orderItems.length,
-                        status: OrdersCubit.get(context).filterdProduct[index].status,
+                        onTap:(){
+                          cubit.selectStatus(index);
+
+                        },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 23.w, vertical: 8.h),
+                        decoration: BoxDecoration(
+                            color: cubit.selectedIndex==index?Color(0xffF8E8E9):Colors.transparent,
+                            border: Border.all(
+                              color: cubit.selectedIndex==index?Color(0xff6C2326):Color(0xffE5E7EB),
+                            ),
+                            borderRadius: BorderRadius.circular(8.r)),
+                        child: Text(
+                          OrdersCubit.get(context).status[index],
+                          style: TextStyles.font12GryBold
+                              .copyWith(fontWeight: FontWeightHelper.medium),
+                        ),
                       ),
                     );
-                  });
-            },
-          )
-        ],
+                  }),
+            );
+        },
+      ),
+            BlocBuilder<OrdersCubit, OrdersState>(
+              builder: (context, state) {
+                if (state is OrdersLoading) {
+                  return Padding(
+                    padding: EdgeInsets.only(top: 18.0.h),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+                return ListView.separated(
+                    separatorBuilder: (context, index) => verticalSpace(16),
+                    itemCount:
+                        OrdersCubit.get(context).filterdProduct.length,
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: (){
+                          context.pushNamed(Routes.myOrdertDetailsScreen,arguments: OrdersCubit.get(context).filterdProduct[index]);
+                        },
+                        child: OrdersItemContainer(
+                          myOrderModel:
+                          OrdersCubit.get(context)
+                              .filterdProduct[index]
+                              .orderItems[0],
+                          items: OrdersCubit.get(context).filterdProduct[index].orderItems.length,
+                          status: OrdersCubit.get(context).filterdProduct[index].status,
+                        ),
+                      );
+                    });
+              },
+            )
+          ],
+        ),
       ),
     );
   }

@@ -17,34 +17,37 @@ class MyAddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffFAFAFA),
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
-        children: [
-          CustomAppBarScreen(title: S.of(context).MyAddresses),
-          verticalSpace(22),
-          AddAddress(),
-          verticalSpace(16),
-          BlocBuilder<AddressCubit,AddressState>(
-  builder: (context, state) {
-    if(state is AddressLoading) {
-      return Center(child: CircularProgressIndicator(color: Color(0xff922F34),));
-    }
-    else {
-      return ListView.separated(
-        shrinkWrap: true,
+    return SafeArea(
+      bottom: true,
+      child: Scaffold(
+        backgroundColor: Color(0xffFAFAFA),
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
+          children: [
+            CustomAppBarScreen(title: S.of(context).MyAddresses),
+            verticalSpace(22),
+            AddAddress(),
+            verticalSpace(16),
+            BlocBuilder<AddressCubit,AddressState>(
+        builder: (context, state) {
+      if(state is AddressLoading) {
+        return Center(child: CircularProgressIndicator(color: Color(0xff922F34),));
+      }
+      else {
+        return ListView.separated(
+          shrinkWrap: true,
 
-        separatorBuilder: (context,index) => verticalSpace(16),
-        itemCount: AddressCubit.get(context).addresses.length,
-        itemBuilder: (context,index) {
-          return AddressContainer(addressModel:AddressCubit.get(context).addresses[index] ,);
-        }
-      );
-    }
-  },
-)
-        ],
+          separatorBuilder: (context,index) => verticalSpace(16),
+          itemCount: AddressCubit.get(context).addresses.length,
+          itemBuilder: (context,index) {
+            return AddressContainer(addressModel:AddressCubit.get(context).addresses[index] ,);
+          }
+        );
+      }
+        },
+      )
+          ],
+        ),
       ),
     );
   }

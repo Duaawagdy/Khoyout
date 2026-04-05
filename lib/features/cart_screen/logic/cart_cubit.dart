@@ -31,8 +31,8 @@ class CartCubit extends Cubit<CartState> {
       emit(CartErrorState());
     }, (r) {
       cartResponse=r.items;
-      totalusd=r.totalUsd;
-      subtotal=r.subtotalUsd;
+      totalusd=r.totalEgp;
+      subtotal=r.subtotalEgp;
       seppingFee=r.shipping;
       emit(CartLoadedState());
     });
@@ -41,11 +41,13 @@ class CartCubit extends Cubit<CartState> {
     emit(AddToCartLoading());
     var response=await cartRepo.addToCart(selectedVarientId,productQuantity);
     response.fold((l){
+      print('error is $l');
       emit(AddToCartError());
     }, (r){
+      print('add product');
       getCartItems();
      cartResponse[index].quantity=productQuantity;
-     cartResponse[index].lineTotalUsd=r.lineTotalUsd;
+     cartResponse[index].lineTotalUsd=r.lineTotalEgp;
       emit(AddToCartSuccess());
     });
   }

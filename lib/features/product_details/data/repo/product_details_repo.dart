@@ -30,6 +30,7 @@ class ProductDetailsRepo {
       var response = await dio.post('cart/add/$id', data: {"quantity": "$qu"});
       return right(AddCartResponse.fromJson(response.data['data']));
     } catch (e) {
+      print('errorv$e');
       return left(ApiErrorHandler.handle(e));
     }
   }
@@ -38,6 +39,7 @@ class ProductDetailsRepo {
       var response = await dio.get('products/$id/reviews');
       return right(ReviewsResponse.fromJson(response.data));
     } catch (e) {
+      print('errorv$e');
       return left(ApiErrorHandler.handle(e));
     }
   }

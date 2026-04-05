@@ -106,7 +106,7 @@ class AddToCartStateUi extends StatelessWidget {
                                     .copyWith(fontSize: 12.sp),
                               ),
                               Text(
-                                message.unitPriceUsd.toString(),
+                                message.unitPriceEgp.toString(),
                                 style: TextStyles.font24BlackBold
                                     .copyWith(fontSize: 18.sp),
                               )

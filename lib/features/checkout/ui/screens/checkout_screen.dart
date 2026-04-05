@@ -41,276 +41,279 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
-        child: BlocBuilder<CheckoutCubit, CheckoutState>(
-          builder: (context, state) {
-            final cubit = CheckoutCubit.get(context);
-            if (cubit.selectedPayment == 'cod') {
-              return SlideToOrderWidget();
-            } else if(cubit.selectedPayment == 'cc'){
-              return GestureDetector(
-                onTap: (){},
-                child: Container(
+    return SafeArea(
+      bottom: true,
+      child: Scaffold(
+        bottomNavigationBar: Container(
+          color: Colors.white,
+          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
+          child: BlocBuilder<CheckoutCubit, CheckoutState>(
+            builder: (context, state) {
+              final cubit = CheckoutCubit.get(context);
+              if (cubit.selectedPayment == 'cod') {
+                return SlideToOrderWidget();
+              } else if(cubit.selectedPayment == 'cc'){
+                return GestureDetector(
+                  onTap: (){},
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                    decoration: BoxDecoration(
+                        color: Color(0xff441618),
+                        borderRadius: BorderRadius.circular(8.r)),
+                    child: Text(
+                      S.of(context).SelectPayment,
+                      textAlign: TextAlign.center,
+                      style:
+                      TextStyles.font16BoldWhite,
+                    ),
+                  ),
+                );
+              }
+                else
+             {
+                return Container(
                   padding: EdgeInsets.symmetric(vertical: 12.h),
                   decoration: BoxDecoration(
-                      color: Color(0xff441618),
+                      color: Color(0xffA1A8B0),
                       borderRadius: BorderRadius.circular(8.r)),
                   child: Text(
                     S.of(context).SelectPayment,
                     textAlign: TextAlign.center,
                     style:
-                    TextStyles.font16BoldWhite,
+                        TextStyles.font16BoldWhite.copyWith(color: Colors.black),
                   ),
-                ),
-              );
-            }
-              else
-           {
-              return Container(
-                padding: EdgeInsets.symmetric(vertical: 12.h),
-                decoration: BoxDecoration(
-                    color: Color(0xffA1A8B0),
-                    borderRadius: BorderRadius.circular(8.r)),
-                child: Text(
-                  S.of(context).SelectPayment,
-                  textAlign: TextAlign.center,
-                  style:
-                      TextStyles.font16BoldWhite.copyWith(color: Colors.black),
-                ),
-              );
-            }
-          },
+                );
+              }
+            },
+          ),
         ),
+        backgroundColor: Color(0xffFAFAFA),
+        body: ListView(
+          // padding: EdgeInsets.symmetric(horizontal: 18.w),
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18.w),
+              child: Column(
+                children: [
+                  verticalSpace(20),
+                  CustomAppBarScreen(
+                    title: S.of(context).Checkout,
+                  ),
+                  verticalSpace(24),
+                  SizedBox(
+                    height: 155.h,
+                    child: ListView.separated(
+                        controller: _scrollController,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return CheckoutItemContainer(
+                              cart: CartCubit.get(context).cartResponse,
+                              index: index);
+                        },
+                        separatorBuilder: (context, index) {
+                          return horizontalSpace(18);
+                        },
+                        itemCount: CartCubit.get(context).cartResponse.length),
+                  ),
+                  verticalSpace(12),
+                  HorizontalScrollWithIndicator(
+                    scrollController: _scrollController,
+                    itemCount: CartCubit.get(context).cartResponse.length,
+                    itemWidth: 324.w,
+                  ),
+                ],
+              ),
+            ),
+            verticalSpace(24),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    S.of(context).ShippingAddress,
+                    style:
+                        TextStyles.font16BoldWhite.copyWith(color: Colors.black),
+                  ),
+                  verticalSpace(16),
+                  BlocBuilder<AddressCubit,AddressState>(
+        builder: (context, state) {
+      if(state is AddressLoading){
+        return Center(child: CircularProgressIndicator(color: ColorsManager.kPrimaryColor,),);
+      }else if(AddressCubit.get(context).addresses.isEmpty){
+        return SizedBox.shrink();
+      }
+      else {
+        return AddressContainer(addressModel: AddressCubit.get(context).addresses[0],);
+      }
+        },
       ),
-      backgroundColor: Color(0xffFAFAFA),
-      body: ListView(
-        // padding: EdgeInsets.symmetric(horizontal: 18.w),
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18.w),
-            child: Column(
-              children: [
-                verticalSpace(20),
-                CustomAppBarScreen(
-                  title: S.of(context).Checkout,
-                ),
-                verticalSpace(24),
-                SizedBox(
-                  height: 155.h,
-                  child: ListView.separated(
-                      controller: _scrollController,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return CheckoutItemContainer(
-                            cart: CartCubit.get(context).cartResponse,
-                            index: index);
-                      },
-                      separatorBuilder: (context, index) {
-                        return horizontalSpace(18);
-                      },
-                      itemCount: CartCubit.get(context).cartResponse.length),
-                ),
-                verticalSpace(12),
-                HorizontalScrollWithIndicator(
-                  scrollController: _scrollController,
-                  itemCount: CartCubit.get(context).cartResponse.length,
-                  itemWidth: 324.w,
-                ),
-              ],
+                  verticalSpace(16),
+                  AddAddressContainer()
+                ],
+              ),
             ),
-          ),
-          verticalSpace(24),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-            color: Colors.white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  S.of(context).ShippingAddress,
-                  style:
-                      TextStyles.font16BoldWhite.copyWith(color: Colors.black),
-                ),
-                verticalSpace(16),
-                BlocBuilder<AddressCubit,AddressState>(
-  builder: (context, state) {
-    if(state is AddressLoading){
-      return Center(child: CircularProgressIndicator(color: ColorsManager.kPrimaryColor,),);
-    }else if(AddressCubit.get(context).addresses.isEmpty){
-      return SizedBox.shrink();
-    }
-    else {
-      return AddressContainer(addressModel: AddressCubit.get(context).addresses[0],);
-    }
-  },
-),
-                verticalSpace(16),
-                AddAddressContainer()
-              ],
-            ),
-          ),
-          verticalSpace(24),
-          BlocBuilder<CheckoutCubit,CheckoutState>(
-  builder: (context, state) {
-    return Container(
-            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-            color: Colors.white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  S.of(context).paywith,
-                  style:
-                      TextStyles.font16BoldWhite.copyWith(color: Colors.black),
-                ),
-                verticalSpace(14),
-                BlocBuilder<CheckoutCubit, CheckoutState>(
-                  builder: (context, state) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            verticalSpace(24),
+            BlocBuilder<CheckoutCubit,CheckoutState>(
+        builder: (context, state) {
+      return Container(
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    S.of(context).paywith,
+                    style:
+                        TextStyles.font16BoldWhite.copyWith(color: Colors.black),
+                  ),
+                  verticalSpace(14),
+                  BlocBuilder<CheckoutCubit, CheckoutState>(
+                    builder: (context, state) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          PaymentMethod(
+                            image: 'assets/credit-card.png',
+                            method: S.of(context).CreditCard,
+                            onTap: () {
+                              CheckoutCubit.get(context)
+                                  .selectPaymentMethod('cc');
+                            },
+                            value: CheckoutCubit.get(context).selectedPayment ==
+                                'cc',
+                          ),
+                          PaymentMethod(
+                            image: 'assets/wallet.png',
+                            method: S.of(context).CashonDelivery,
+                            onTap: () {
+                              CheckoutCubit.get(context)
+                                  .selectPaymentMethod('cod');
+                            },
+                            value: CheckoutCubit.get(context).selectedPayment ==
+                                'cod',
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
+            );
+        },
+      ),
+            verticalSpace(24),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //verticalSpace(24),
+                  // Text(
+                  //   S.of(context).CouponCode,
+                  //   style:
+                  //       TextStyles.font16BoldWhite.copyWith(color: Colors.black),
+                  // ),
+                  // verticalSpace(12),
+                  // ApplyCoupon(),
+                  // verticalSpace(24),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xA000000), // Shadow color
+                            blurRadius: 10.r,
+                            offset: Offset(0, -8.h), // Shadow position
+                          ),
+                        ]),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        PaymentMethod(
-                          image: 'assets/credit-card.png',
-                          method: S.of(context).CreditCard,
-                          onTap: () {
-                            CheckoutCubit.get(context)
-                                .selectPaymentMethod('cc');
-                          },
-                          value: CheckoutCubit.get(context).selectedPayment ==
-                              'cc',
+                        Text(
+                          S.of(context).OrderSummary,
+                          style: TextStyles.font16BlackRegular
+                              .copyWith(fontWeight: FontWeightHelper.medium),
                         ),
-                        PaymentMethod(
-                          image: 'assets/wallet.png',
-                          method: S.of(context).CashonDelivery,
-                          onTap: () {
-                            CheckoutCubit.get(context)
-                                .selectPaymentMethod('cod');
-                          },
-                          value: CheckoutCubit.get(context).selectedPayment ==
-                              'cod',
+                        verticalSpace(13),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              S.of(context).Subtotal,
+                              style: TextStyles.font14BlackRegular
+                                  .copyWith(fontWeight: FontWeightHelper.medium),
+                            ),
+                            Text(
+                              CartCubit.get(context).subtotal.toString(),
+                              style: TextStyles.font14SeconderyBold
+                                  .copyWith(color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        // verticalSpace(13),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       S.of(context).Discount,
+                        //       style: TextStyles.font14BlackRegular
+                        //           .copyWith(fontWeight: FontWeightHelper.medium),
+                        //     ),
+                        //     Text(
+                        //       '200',
+                        //       style: TextStyles.font14SeconderyBold
+                        //           .copyWith(color: Colors.black),
+                        //     ),
+                        //   ],
+                        // ),
+                        verticalSpace(13),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              S.of(context).ShippingFee,
+                              style: TextStyles.font14BlackRegular
+                                  .copyWith(fontWeight: FontWeightHelper.medium),
+                            ),
+                            Text(
+                              CartCubit.get(context).seppingFee.toString(),
+                              style: TextStyles.font14SeconderyBold
+                                  .copyWith(color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        verticalSpace(13),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              S.of(context).Total,
+                              style: TextStyles.font14BlackRegular
+                                  .copyWith(fontWeight: FontWeightHelper.medium),
+                            ),
+                            Text(
+                              CartCubit.get(context).totalusd.toString(),
+                              style: TextStyles.font14SeconderyBold
+                                  .copyWith(color: Colors.black),
+                            ),
+                          ],
                         ),
                       ],
-                    );
-                  },
-                ),
-              ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          );
-  },
-),
-          verticalSpace(24),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-            color: Colors.white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //verticalSpace(24),
-                // Text(
-                //   S.of(context).CouponCode,
-                //   style:
-                //       TextStyles.font16BoldWhite.copyWith(color: Colors.black),
-                // ),
-                // verticalSpace(12),
-                // ApplyCoupon(),
-                // verticalSpace(24),
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xA000000), // Shadow color
-                          blurRadius: 10.r,
-                          offset: Offset(0, -8.h), // Shadow position
-                        ),
-                      ]),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        S.of(context).OrderSummary,
-                        style: TextStyles.font16BlackRegular
-                            .copyWith(fontWeight: FontWeightHelper.medium),
-                      ),
-                      verticalSpace(13),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            S.of(context).Subtotal,
-                            style: TextStyles.font14BlackRegular
-                                .copyWith(fontWeight: FontWeightHelper.medium),
-                          ),
-                          Text(
-                            CartCubit.get(context).subtotal.toString(),
-                            style: TextStyles.font14SeconderyBold
-                                .copyWith(color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      // verticalSpace(13),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     Text(
-                      //       S.of(context).Discount,
-                      //       style: TextStyles.font14BlackRegular
-                      //           .copyWith(fontWeight: FontWeightHelper.medium),
-                      //     ),
-                      //     Text(
-                      //       '200',
-                      //       style: TextStyles.font14SeconderyBold
-                      //           .copyWith(color: Colors.black),
-                      //     ),
-                      //   ],
-                      // ),
-                      verticalSpace(13),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            S.of(context).ShippingFee,
-                            style: TextStyles.font14BlackRegular
-                                .copyWith(fontWeight: FontWeightHelper.medium),
-                          ),
-                          Text(
-                            CartCubit.get(context).seppingFee.toString(),
-                            style: TextStyles.font14SeconderyBold
-                                .copyWith(color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      verticalSpace(13),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            S.of(context).Total,
-                            style: TextStyles.font14BlackRegular
-                                .copyWith(fontWeight: FontWeightHelper.medium),
-                          ),
-                          Text(
-                            CartCubit.get(context).totalusd.toString(),
-                            style: TextStyles.font14SeconderyBold
-                                .copyWith(color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          verticalSpace(40),
-          CheckoutStateUi()
-        ],
+            verticalSpace(40),
+            CheckoutStateUi()
+          ],
+        ),
       ),
     );
   }

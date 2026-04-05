@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:khouyot/core/functions/snak_bar.dart';
 import 'package:khouyot/core/helpers/extensions.dart';
 import 'package:khouyot/features/forget_password/data/model/reset_password_request.dart';
 import 'package:khouyot/features/forget_password/logic/forget_password_cubit.dart';
@@ -29,6 +30,7 @@ class ResetPasswordStateUI extends StatelessWidget {
         } else if (state is ResetPasswordSuccess) {
           //CashHelper.putBool(key: Keys.guestMode, value:false);
           context.pop();
+          showSnackBar(context: context, text: S.of(context).passwordResetSuccessfully);
           //DioFactory.setTokenIntoHeaderAfterLogin(state.signUpResponse.token!);
           // NavBarCubit.get(context).changeIndex(0,jumping: false);
           context.pushNamedAndRemoveUntil(Routes.signUpScreen,

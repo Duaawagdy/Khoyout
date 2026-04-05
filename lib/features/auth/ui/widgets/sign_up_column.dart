@@ -55,9 +55,17 @@ class _SignUpColumnState extends State<SignUpColumn> {
             title: S.of(context).Email,
             hintText: S.of(context).EnteryourEmail,
             prefixIcon: AssetsData.email,
-            validator: (value) => value == null || value.isEmpty ?S.of(context).MustnotBeEmpty : null,
-
             controller: emailController,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return S.of(context).MustnotBeEmpty;
+              }
+              final emailRegex = RegExp(r'^[\w\.-]+@[\w\.-]+\.\w{2,}$');
+              if (!emailRegex.hasMatch(value.trim())) {
+                return S.of(context).InvalidEmail; // add to localization
+              }
+              return null;
+            },
           ),
           verticalSpace(12),
           AuthInput(
@@ -65,11 +73,29 @@ class _SignUpColumnState extends State<SignUpColumn> {
             obscureText: AuthCubit.get(context).showPassword,
             hintText: S.of(context).Enteryourpassword,
             prefixIcon: AssetsData.lockIcon,
-            validator: (value) => value == null || value.isEmpty ?S.of(context).MustnotBeEmpty : null,
-
             controller: passwordController,
-            onTap: (){AuthCubit.get(context).changePasswordVisibility();},
-            lastIcon: Icon(AuthCubit.get(context).showPassword?Icons.visibility_off_outlined:Icons.visibility_outlined,color: Colors.black,),
+            onTap: () { AuthCubit.get(context).changePasswordVisibility(); },
+            lastIcon: Icon(
+              AuthCubit.get(context).showPassword
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              color: Colors.black,
+            ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return S.of(context).MustnotBeEmpty;
+              }
+              if (value.length < 8) {
+                return S.of(context).PasswordMin8; // add to localization
+              }
+              if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                return S.of(context).PasswordUppercase; // add to localization
+              }
+              if (!RegExp(r'[0-9]').hasMatch(value)) {
+                return S.of(context).PasswordNumber; // add to localization
+              }
+              return null;
+            },
           ),
           verticalSpace(12),
           AppTextButton(

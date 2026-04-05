@@ -42,8 +42,8 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     for (final variant in variants) {
       final hasColor = variant.options.any(
             (option) =>
-        option.option?.toLowerCase() == 'color' &&
-            option.value?.toLowerCase() == name.toLowerCase(),
+            option.option?.toLowerCase().trim() == 'color' &&
+                option.value?.toLowerCase().trim() == name.toLowerCase().trim(),
       );
 
       if (hasColor) {

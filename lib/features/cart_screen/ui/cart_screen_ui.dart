@@ -298,7 +298,7 @@ class CartItemContainer extends StatelessWidget {
                   ),
                   PriceDisplay(
                     discountPrice: null,
-                    basePrice: cart[index].lineTotalUsd,
+                    basePrice: cart[index].lineTotalEgp,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

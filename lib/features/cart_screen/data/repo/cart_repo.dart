@@ -35,6 +35,7 @@ class CartRepo{
       var response = await dio.post('cart/add/$id', data: {"quantity": "$qu"});
       return right(AddCartResponse.fromJson(response.data['data']));
     } catch (e) {
+      print(e);
       return left(ApiErrorHandler.handle(e));
     }
   }

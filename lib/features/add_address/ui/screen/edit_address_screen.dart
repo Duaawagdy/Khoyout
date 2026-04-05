@@ -52,77 +52,80 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 18.w),
-        child: AppTextButton(
-            buttonText: S.of(context).SaveAddress,
-            textStyle: TextStyles.font16BoldWhite,
-            onPressed: () {
-              AddressCubit.get(context).editAddress(AddAddressModel(
-                  street: addressController.text,
-                  city: cityCon.text,
-                  country: 'egypt',
-                  buildingNumber: buildingCon.text,
-                  apartmentNumber: appController.text,
-                  phoneNumber: phoneController.text,
-                  isDefault: 0),widget.addressModel.id);
-            }
+    return SafeArea(
+      bottom: true,
+      child: Scaffold(
+        bottomNavigationBar: Container(
+          color: Colors.white,
+          padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 18.w),
+          child: AppTextButton(
+              buttonText: S.of(context).SaveAddress,
+              textStyle: TextStyles.font16BoldWhite,
+              onPressed: () {
+                AddressCubit.get(context).editAddress(AddAddressModel(
+                    street: addressController.text,
+                    city: cityCon.text,
+                    country: 'egypt',
+                    buildingNumber: buildingCon.text,
+                    apartmentNumber: appController.text,
+                    phoneNumber: phoneController.text,
+                    isDefault: 0),widget.addressModel.id);
+              }
+              ),
+        ),
+        backgroundColor: Color(0xffFAFAFA),
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
+          children: [
+            CustomAppBarScreen(title: S.of(context).editAddress),
+            verticalSpace(28),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                    width: 165.w,
+                    child: AddressDetailsWidget(
+                        title: S.of(context).city, controller: cityCon)),
+                SizedBox(
+                    width: 165.w,
+                    child: AddressDetailsWidget(
+                        title: S.of(context).country, controller: areaController)),
+              ],
             ),
-      ),
-      backgroundColor: Color(0xffFAFAFA),
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
-        children: [
-          CustomAppBarScreen(title: S.of(context).editAddress),
-          verticalSpace(28),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                  width: 165.w,
-                  child: AddressDetailsWidget(
-                      title: S.of(context).city, controller: cityCon)),
-              SizedBox(
-                  width: 165.w,
-                  child: AddressDetailsWidget(
-                      title: S.of(context).country, controller: areaController)),
-            ],
-          ),
-          verticalSpace(24),
-          AddressDetailsWidget(
-            title: S.of(context).street,
-            controller: addressController,
-          ),
-
-
-          verticalSpace(24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                  width: 165.w,
-                  child: AddressDetailsWidget(
-                      title: S.of(context).buildingNumber, controller: buildingCon)),
-              SizedBox(
-                  width: 165.w,
-                  child: AddressDetailsWidget(
-                      title: S.of(context).ApartamentNumber, controller: appController)),
-            ],
-          ),
-
-          verticalSpace(24),
-          AddressDetailsWidget(
-            title: S.of(context).phone,
-            controller: phoneController,
-            prefixIcon: Padding(
-              padding: EdgeInsetsDirectional.only(start: 10.w),
-              child: Text('+20', style: TextStyles.font16BlackRegular),
+            verticalSpace(24),
+            AddressDetailsWidget(
+              title: S.of(context).street,
+              controller: addressController,
             ),
-          ),
-          AddAddressStateUi(),
-        ],
+
+
+            verticalSpace(24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                    width: 165.w,
+                    child: AddressDetailsWidget(
+                        title: S.of(context).buildingNumber, controller: buildingCon)),
+                SizedBox(
+                    width: 165.w,
+                    child: AddressDetailsWidget(
+                        title: S.of(context).ApartamentNumber, controller: appController)),
+              ],
+            ),
+
+            verticalSpace(24),
+            AddressDetailsWidget(
+              title: S.of(context).phone,
+              controller: phoneController,
+              prefixIcon: Padding(
+                padding: EdgeInsetsDirectional.only(start: 10.w),
+                child: Text('+20', style: TextStyles.font16BlackRegular),
+              ),
+            ),
+            AddAddressStateUi(),
+          ],
+        ),
       ),
     );
   }
