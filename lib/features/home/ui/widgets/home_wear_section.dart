@@ -114,7 +114,7 @@ class _HomeWearCard extends StatelessWidget {
               start: -60.w,
               top: 8.h,
               child: CustomPaint(
-                size: Size(120.w, 300.h),
+                size: Size(120.w, 130.h),
                 painter: _ArcsPainter(arcColor),
               ),
             ),
@@ -152,7 +152,7 @@ class _HomeWearCard extends StatelessWidget {
               bottom: 22.h,
               child: Text(
                 label,
-                style: TextStyles.font20BlackMedium.copyWith(fontSize: 24.sp),
+                style: TextStyles.font20BlackMedium,
               ),
             ),
           ],

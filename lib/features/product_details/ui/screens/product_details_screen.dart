@@ -115,24 +115,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       buttonText: S.of(context).Addtocart,
                       textStyle: TextStyles.font16BoldWhite,
                       onPressed: (){
-                        if (ProductDetailsCubit.get(context).guestMode) {
+                        final cubit = ProductDetailsCubit.get(context);
+                        if (cubit.guestMode) {
                           showGuestBottomSheet(context);
-                        }else{
-                          if (ProductDetailsCubit.get(context)
-                              .selectedVarientId ==
-                              -1) {
-                            showSnackBar(
-                                context: context,
-                                text: S.of(context).pleaseSelectColor);
-                          } else if (ProductDetailsCubit.get(context)
-                              .productQuantity ==
-                              0) {
-                            showSnackBar(
-                                context: context,
-                                text: S.of(context).pleaseAddQuantity);
-                          } else {
-                            ProductDetailsCubit.get(context).addToCart();
-                          }
+                        } else if (cubit.selectedVarientName.isEmpty) {
+                          showSnackBar(context: context, text: S.of(context).pleaseSelectColor);
+                        } else if (cubit.hasSizes && cubit.selectedSizeName.isEmpty) {
+                          showSnackBar(context: context, text: S.of(context).pleaseSelectSize);
+                        } else if (cubit.selectedVarientId == -1) {
+                          showSnackBar(context: context, text: S.of(context).combinationUnavailable);
+                        } else if (cubit.productQuantity == 0) {
+                          showSnackBar(context: context, text: S.of(context).pleaseAddQuantity);
+                        } else {
+                          cubit.addToCart();
                         }
 
                       },
@@ -356,6 +351,31 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                     ),
                     verticalSpace(24),
+                    BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
+                      builder: (context, state) {
+                        if (!ProductDetailsCubit.get(context).hasSizes) {
+                          return const SizedBox.shrink();
+                        }
+                        return Padding(
+                          padding: EdgeInsets.only(top: 12.h),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 12.r, horizontal: 18.w),
+                            color: Colors.white,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  S.of(context).Size,
+                                  style: TextStyles.font24BlackBold.copyWith(fontSize: 16.sp),
+                                ),
+                                verticalSpace(16),
+                                const SizesContainer(),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),verticalSpace(24),
                     DescriptionContainer(),
                     verticalSpace(24),
                     Container(
@@ -442,8 +462,67 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 }
+class SizesContainer extends StatelessWidget {
+  const SizesContainer({super.key});
 
-class ReviewItem extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
+      builder: (context, state) {
+        final cubit = ProductDetailsCubit.get(context);
+        final sizes = cubit.allSizes;
+        final available = cubit.availableSizes;
+
+        return SizedBox(
+          height: 44.h,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: sizes.length,
+            separatorBuilder: (_, __) => horizontalSpace(12),
+            itemBuilder: (context, index) {
+              final size = sizes[index];
+              final isAvailable = available.contains(size);
+              final isSelected = cubit.selectedSizeName == size;
+
+              return GestureDetector(
+                onTap: isAvailable ? () => cubit.selectSize(size) : null,
+                child: Container(
+                  constraints: BoxConstraints(minWidth: 54.w),
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  decoration: BoxDecoration(
+                    color: isSelected ? const Color(0xff6C2326) : Colors.white,
+                    border: Border.all(
+                      color: isSelected
+                          ? const Color(0xff6C2326)
+                          : isAvailable
+                          ? const Color(0x33000000)
+                          : const Color(0x14000000),
+                    ),
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Text(
+                    size,
+                    style: TextStyles.font16BlackRegular.copyWith(
+                      color: isSelected
+                          ? Colors.white
+                          : isAvailable
+                          ? Colors.black
+                          : const Color(0x40000000),
+                      fontWeight: isSelected
+                          ? FontWeightHelper.semiBold
+                          : FontWeightHelper.regular,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+}class ReviewItem extends StatelessWidget {
   const ReviewItem({
     super.key,
     required this.review,

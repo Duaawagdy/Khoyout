@@ -156,6 +156,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sign in to track your orders, save favorites, and enjoy a smoother shopping experience."),
         "Signuptoenjoysmoother": MessageLookupByLibrary.simpleMessage(
             "Sign up to enjoy a smoother shopping experience, save favorites, and track your orders easily."),
+        "Size": MessageLookupByLibrary.simpleMessage("Size"),
         "StartexploringKhyout": MessageLookupByLibrary.simpleMessage(
             "Start exploring Khyout collections and save the items you love."),
         "Status": MessageLookupByLibrary.simpleMessage("Status"),
@@ -196,6 +197,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buildingNumber":
             MessageLookupByLibrary.simpleMessage("Building Number"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
+        "combinationUnavailable":
+            MessageLookupByLibrary.simpleMessage("combinationUnavailable"),
         "connectionTimeoutWithTheServer": MessageLookupByLibrary.simpleMessage(
             "Connection timeout with the server"),
         "connectionToServerFailed":
@@ -233,6 +236,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("please Add Quantity"),
         "pleaseSelectColor": MessageLookupByLibrary.simpleMessage(
             "Please select a color option"),
+        "pleaseSelectSize":
+            MessageLookupByLibrary.simpleMessage("pleaseSelectSize"),
         "pleaseselectpaymentMethod": MessageLookupByLibrary.simpleMessage(
             "Please select payment Method"),
         "receiveTimeOutInConnectionWithTheServer":

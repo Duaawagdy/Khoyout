@@ -88,7 +88,9 @@
   "Browseproduct":"Browse product",
   "Color": "Color",
   "HomeWear": "Home Wear",
-
+  "Size": "Size",
+"combinationUnavailable": "combinationUnavailable",
+  "pleaseSelectSize": "pleaseSelectSize",
   "ShippingAddress": "Shipping Address",
   "AddAddress": "Add Address",
   "paywith": "pay with",

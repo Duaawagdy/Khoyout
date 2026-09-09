@@ -940,6 +940,36 @@ class S {
     );
   }
 
+  /// `Size`
+  String get Size {
+    return Intl.message(
+      'Size',
+      name: 'Size',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `combinationUnavailable`
+  String get combinationUnavailable {
+    return Intl.message(
+      'combinationUnavailable',
+      name: 'combinationUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pleaseSelectSize`
+  String get pleaseSelectSize {
+    return Intl.message(
+      'pleaseSelectSize',
+      name: 'pleaseSelectSize',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Shipping Address`
   String get ShippingAddress {
     return Intl.message(

@@ -9,6 +9,7 @@ class GetProductDetailsError extends ProductDetailsState {}
 class GetProductDetailsSuccess extends ProductDetailsState {}
 class SelectVarientColor extends ProductDetailsState {}
 class UpdatedQuantity extends ProductDetailsState {}
+class SelectVarientSize extends ProductDetailsState {}
 class AddToCartLoading extends ProductDetailsState {}
 class AddToCartError extends ProductDetailsState {}
 class AddToCartSuccess extends ProductDetailsState {
