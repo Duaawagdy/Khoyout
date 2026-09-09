@@ -740,7 +740,7 @@ ProductDetailsCubit.get(context).tapFav(isFav);
                           image: ProductDetailsCubit.get(context)
                               .productDetailsModel
                               .data
-                              ?.firstImage,
+                              ?.images[index],
                           radius: 8.r,
                           width: 63.w,
                           height: 72.h,

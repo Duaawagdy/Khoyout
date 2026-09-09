@@ -25,6 +25,7 @@ import '../widgets/best_seller_products.dart';
 import '../widgets/featured_products.dart';
 import '../widgets/home_banner_offers.dart';
 import '../widgets/home_bar.dart';
+import '../widgets/home_wear_section.dart';
 import '../widgets/horizental_scroller.dart';
 import '../widgets/product_card.dart';
 
@@ -49,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _homeCubit.getOffers();
     _homeCubit.getCategories();
     _homeCubit.getProducts();
+
     _homeCubit.getBestSellerProducts();
     _homeCubit.getFeaturedProducts();
   }
@@ -106,7 +108,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
             verticalSpace(36),
             _BestSellerProductsSection(),
-          ],
+            verticalSpace(36),
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 16.0.w),
+            child: Column(
+              children: [
+                ViewAll(title: S.of(context).HomeWear,haveAll:true,onTapView: (){}),
+                verticalSpace(20),
+                _HomeWearSection(),
+              ],
+            ),
+          )
+
+            ],
         ),
       ),
     );
@@ -114,7 +128,25 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 // ✅ OPTIMIZATION: Separate widgets with BlocSelector for targeted rebuilds
+class _HomeWearSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<HomeCubit, HomeState, Category?>(
+      selector: (state) {
+        final cats = context.read<HomeCubit>().categories;
+        final focused = cats.where((c) => c.focus && c.hasSubCategories);
+        return focused.isEmpty ? null : focused.first;
+      },
+      builder: (context, category) {
+        if (category == null) return const SizedBox.shrink();
 
+        final locale = LocalizationCubit.get(context).locale.languageCode;
+
+        return HomeWearCards(subCategories: category.subCategories);
+      },
+    );
+  }
+}
 class _OffersSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

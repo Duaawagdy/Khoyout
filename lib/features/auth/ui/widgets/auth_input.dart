@@ -43,11 +43,9 @@ class AuthInput extends StatelessWidget {
               controller: controller,
               backgroundColor: Colors.white,
               suffixIcon: GestureDetector(onTap:onTap,child: lastIcon??SizedBox()),
-              prefexIcon: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
-                child: Image.asset(
-                  prefixIcon,
-                ),
+              prefexIcon: Image.asset(
+                prefixIcon,
+                height: 20,
               ),
       validator: validator,
 contentPadding: EdgeInsets.zero,

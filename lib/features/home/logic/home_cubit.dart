@@ -5,6 +5,7 @@ import 'package:khouyot/features/home/data/model/category_model.dart';
 import 'package:khouyot/features/home/data/model/offers_model.dart';
 import 'package:meta/meta.dart';
 
+import '../data/model/homewear_subcategories_model.dart';
 import '../data/model/product_model.dart';
 import '../data/repo/home_repo.dart';
 
@@ -106,6 +107,20 @@ featuredProducts[index].isFavorite=value;
       emit(GetProductsError());
     }, (r){
       products=r;
+      emit(GetProductsSuccess());
+    });
+
+}
+  CategoriesResponse ?homeWearCategories;
+
+Future<void> getHomeWearsubcategories()async{
+    emit(GetProductsLoading());
+    var response= await homeRepo.gethomeWearSubCategoies();
+    response.fold((l){
+      print('erroe${l}');
+      emit(GetProductsError());
+    }, (r){
+      homeWearCategories=r;
       emit(GetProductsSuccess());
     });
 

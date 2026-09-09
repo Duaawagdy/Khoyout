@@ -32,7 +32,6 @@ final List<ProductModel> products;
         Color(0xffFAFAFA),body:
         SafeArea(
           child: ListView(children: [
-
             Container(
               padding: EdgeInsetsDirectional.only(
                   top: 33.h, bottom: 24.h, start: 18.w, end: 18.w),

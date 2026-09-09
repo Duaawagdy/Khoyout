@@ -7,6 +7,8 @@ import 'package:khouyot/features/home/data/model/category_model.dart';
 import 'package:khouyot/features/home/data/model/offers_model.dart';
 import 'package:khouyot/features/home/data/model/product_model.dart';
 
+import '../model/homewear_subcategories_model.dart';
+
 class HomeRepo{
   Dio dio;
   HomeRepo(this.dio);
@@ -46,6 +48,18 @@ class HomeRepo{
       (response.data['data'] as List)
           .map((e) => ProductModel.fromJson(e))
           .toList();
+
+      return Right(categories);
+    }catch(e){
+      print(e);
+      return left(ApiErrorHandler.handle(e));
+
+    }
+  }Future<Either<ApiErrorModel,CategoriesResponse>> gethomeWearSubCategoies()async{
+    try{
+      var response = await dio.get('categories/38/sub_categories');
+      final CategoriesResponse categories =
+      CategoriesResponse.fromJson(response.data);
 
       return Right(categories);
     }catch(e){

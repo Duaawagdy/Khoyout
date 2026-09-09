@@ -38,6 +38,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
         body: SafeArea(
           child: ListView(
             children: [
+              verticalSpace(20),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 18.w),
                 child: CustomAppBarScreen(title: widget.title),

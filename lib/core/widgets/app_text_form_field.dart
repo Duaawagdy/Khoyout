@@ -97,7 +97,19 @@ minLines: 1,
         hintText: hintText,
         suffixIcon: suffixIcon,
         // ✅ prefix sits inline with text — perfectly aligned
-        prefix: prefexIcon,
+          prefixIcon: prefexIcon == null
+              ? null
+              : Padding(
+            padding: EdgeInsets.only(left: 10.w, right: 6.w),
+            child: prefexIcon,
+          ),
+
+          // ✅ مايقصّش الأيقونة — يخليها تاخد حجمها الطبيعي
+          prefixIconConstraints: BoxConstraints(
+            minWidth: 0,
+            minHeight: 0,
+          ),
+
         // ✅ removed prefixIconConstraints — was clipping to maxHeight:16
         fillColor: backgroundColor ?? ColorsManager.grey,
         filled: true,

@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
       final String token = await CashHelper.getStringSecured(key: Keys.token);
       final context = NavigationService.navigatorKey.currentContext;
-
+print(token);
       if (context == null) return;
 
       if (token.isEmpty) {
