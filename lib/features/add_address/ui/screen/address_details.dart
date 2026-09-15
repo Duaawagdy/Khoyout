@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:khouyot/core/helpers/spacing.dart';
 import 'package:khouyot/core/theming/styles.dart';
@@ -61,72 +62,88 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
             }),
       ),
       backgroundColor: Color(0xffFAFAFA),
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
-        children: [
-          CustomAppBarScreen(title: S.of(context).AddAddress),
-          verticalSpace(28),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                  width: 165.w,
-                  child: AddressDetailsWidget(
-                      title: S.of(context).city, controller: cityCon)),
-              SizedBox(
-                  width: 165.w,
-                  child: AddressDetailsWidget(
-                      title: S.of(context).country, controller: areaController)),
-            ],
-          ),
-          verticalSpace(24),
-          AddressDetailsWidget(
-            title: S.of(context).street,
-            controller: addressController,
-          ),
+      body: SafeArea(
 
-
-          verticalSpace(24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                  width: 165.w,
-                  child: AddressDetailsWidget(
-                      title: S.of(context).buildingNumber, controller: buildingCon)),
-              SizedBox(
-                  width: 165.w,
-                  child: AddressDetailsWidget(
-                      title: S.of(context).ApartamentNumber, controller: appController)),
-            ],
-          ),
-
-          verticalSpace(24),
-          AddressDetailsWidget(
-            title: S.of(context).phone,
-            controller: phoneController,
-            prefixIcon: Padding(
-              padding: EdgeInsetsDirectional.only(start: 10.w),
-              child: Text('+20', style: TextStyles.font16BlackRegular),
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
+          children: [
+            CustomAppBarScreen(title: S.of(context).AddAddress),
+            verticalSpace(28),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                    width: 165.w,
+                    child: AddressDetailsWidget(
+                        title: S.of(context).city, controller: cityCon)),
+                SizedBox(
+                    width: 165.w,
+                    child: AddressDetailsWidget(
+                        title: S.of(context).country, controller: areaController)),
+              ],
             ),
-          ),
-          AddAddressStateUi(),
-        ],
+            verticalSpace(24),
+            AddressDetailsWidget(
+              title: S.of(context).street,
+              controller: addressController,
+            ),
+        
+        
+            verticalSpace(24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                    width: 165.w,
+                    child: AddressDetailsWidget(
+                        title: S.of(context).buildingNumber, controller: buildingCon)),
+                SizedBox(
+                    width: 165.w,
+                    child: AddressDetailsWidget(
+                        title: S.of(context).ApartamentNumber, controller: appController)),
+              ],
+            ),
+        
+            verticalSpace(24),
+            PhoneFieldWidget(
+              title: S.of(context).phone,
+              controller: phoneController,
+              onAddPressed: () {
+                // إضافة رقم تاني
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return S.of(context).MustnotBeEmpty;
+                }
+                if (value.length < 10) {
+                  return 'S.of(context).invalidPhone';
+                }
+                return null;
+              },
+            ),
+            AddAddressStateUi(),
+          ],
+        ),
       ),
     );
   }
 }
-
-class AddressDetailsWidget extends StatelessWidget {
-  const AddressDetailsWidget({
+class PhoneFieldWidget extends StatelessWidget {
+  const PhoneFieldWidget({
     super.key,
     required this.title,
     required this.controller,
-    this.prefixIcon,
+    this.countryCode = '+20',
+    this.onAddPressed,
+    this.validator,
   });
+
   final String title;
   final TextEditingController controller;
-  final Widget? prefixIcon;
+  final String countryCode;
+  final VoidCallback? onAddPressed;
+  final FormFieldValidator<String>? validator;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -138,23 +155,143 @@ class AddressDetailsWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: TextStyles.font16BlackRegular,
-          ),
+          Text(title, style: TextStyles.font16BlackRegular),
           verticalSpace(8),
-          AppTextFormField(
-            hintText: '',
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 10.w,
-              vertical: 16.5.h,
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: TextFormField(
+              controller: controller,
+              validator: validator,
+              keyboardType: TextInputType.phone,
+              textAlign: TextAlign.left,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(11),
+              ],
+              style: TextStyles.font16BlackRegular,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding: EdgeInsets.symmetric(vertical: 16.5.h),
+                prefixIcon: Padding(
+                  padding: EdgeInsetsDirectional.only(start: 14.w, end: 8.w),
+                  child: Text(
+                    countryCode,
+                    style: TextStyles.font16BlackRegular,
+                  ),
+                ),
+                prefixIconConstraints: const BoxConstraints(
+                  minWidth: 0,
+                  minHeight: 0,
+                ),
+                suffixIcon: onAddPressed == null
+                    ? null
+                    : Padding(
+                  padding: EdgeInsetsDirectional.only(end: 12.w),
+                  child: GestureDetector(
+                    onTap: onAddPressed,
+                    child: Container(
+                      width: 24.r,
+                      height: 24.r,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: const Color(0xff6C2326),
+                          width: 1.2,
+                        ),
+                      ),
+                      child: Icon(
+                        Icons.add,
+                        size: 16.r,
+                        color: const Color(0xff6C2326),
+                      ),
+                    ),
+                  ),
+                ),
+                suffixIconConstraints: const BoxConstraints(
+                  minWidth: 0,
+                  minHeight: 0,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                  borderSide: const BorderSide(color: Color(0xffE5E7EB)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                  borderSide: const BorderSide(color: Color(0xff6C2326)),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                  borderSide: const BorderSide(color: Colors.red),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                  borderSide: const BorderSide(color: Colors.red),
+                ),
+              ),
             ),
-            prefexIcon: prefixIcon,
-            backgroundColor: Colors.white,
-            hintStyle: TextStyles.font16BlackRegular,
-            controller: controller,
-            borderRadius: 8.r,
-          )
+          ),
+        ],
+      ),
+    );
+  }
+}
+class AddressDetailsWidget extends StatelessWidget {
+  const AddressDetailsWidget({
+    super.key,
+    required this.title,
+    required this.controller,
+    this.leading,
+  });
+
+  final String title;
+  final TextEditingController controller;
+  final Widget? leading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyles.font16BlackRegular),
+          verticalSpace(8),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (leading != null) ...[
+                Container(
+                  height: 52.h,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: const Color(0xffE5E7EB)),
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: leading,
+                ),
+                horizontalSpace(8),
+              ],
+              Expanded(
+                child: AppTextFormField(
+                  hintText: '',
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 16.5.h,
+                  ),
+                  backgroundColor: Colors.white,
+                  hintStyle: TextStyles.font16BlackRegular,
+                  controller: controller,
+                  borderRadius: 8.r,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

@@ -115,13 +115,21 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
             ),
 
             verticalSpace(24),
-            AddressDetailsWidget(
+            PhoneFieldWidget(
               title: S.of(context).phone,
               controller: phoneController,
-              prefixIcon: Padding(
-                padding: EdgeInsetsDirectional.only(start: 10.w),
-                child: Text('+20', style: TextStyles.font16BlackRegular),
-              ),
+              onAddPressed: () {
+                // إضافة رقم تاني
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return S.of(context).MustnotBeEmpty;
+                }
+                if (value.length < 10) {
+                  return S.of(context).invalidPhone;
+                }
+                return null;
+              },
             ),
             AddAddressStateUi(),
           ],

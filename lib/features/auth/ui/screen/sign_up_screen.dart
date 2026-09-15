@@ -17,41 +17,47 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(AssetsData.logo), fit: BoxFit.cover)),
-          ),
-          SafeArea(
-              child: ListView(
-                shrinkWrap: true,
-            physics: ScrollPhysics(),
-            children: [
-              GuestModeLanguageBar(),
-              verticalSpace(36),
-              WelcomeTextBanner(),
-              verticalSpace(24),
-              BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, state) {
-                  return AuthSwitchContainer(
-                    onSwitch: () {
-                      AuthCubit.get(context).changeAuthMode();
+      body: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        behavior: HitTestBehavior.opaque,
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(AssetsData.logo), fit: BoxFit.cover)),
+            ),
+            Center(
+              child: SafeArea(
+                  child: ListView(
+                    shrinkWrap: true,
+                physics: ScrollPhysics(),
+                children: [
+                  GuestModeLanguageBar(),
+                  verticalSpace(36),
+                  WelcomeTextBanner(),
+                  verticalSpace(24),
+                  BlocBuilder<AuthCubit, AuthState>(
+                    builder: (context, state) {
+                      return AuthSwitchContainer(
+                        onSwitch: () {
+                          AuthCubit.get(context).changeAuthMode();
+                        },
+                        isLogin: AuthCubit.get(context).isLogin,
+                      );
                     },
-                    isLogin: AuthCubit.get(context).isLogin,
-                  );
-                },
-              ),
-              verticalSpace(24),
-              BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, state) {
-                  return AuthContainer();
-                },
-              )
-            ],
-          ))
-        ],
+                  ),
+                  verticalSpace(24),
+                  BlocBuilder<AuthCubit, AuthState>(
+                    builder: (context, state) {
+                      return AuthContainer();
+                    },
+                  )
+                ],
+              )),
+            )
+          ],
+        ),
       ),
     );
   }

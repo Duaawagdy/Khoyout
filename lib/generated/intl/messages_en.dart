@@ -71,8 +71,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Don’t receive OTP ?"),
         "EGP": MessageLookupByLibrary.simpleMessage("EGP"),
         "Email": MessageLookupByLibrary.simpleMessage("E-mail"),
-        "EnterVerificationCode":
-            MessageLookupByLibrary.simpleMessage("Enter Verification Code"),
+        "EnterVerificationCode": MessageLookupByLibrary.simpleMessage(
+            "Verify your email address to sign in"),
         "EnteryourEmail":
             MessageLookupByLibrary.simpleMessage("Enter your Email"),
         "Enteryouremailaccount": MessageLookupByLibrary.simpleMessage(
@@ -85,7 +85,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Explore the latest collection of scarves and accessories with style and high quality."),
         "Favorites": MessageLookupByLibrary.simpleMessage("Favorites"),
         "FeaturedProducts":
-            MessageLookupByLibrary.simpleMessage("Featured Products"),
+            MessageLookupByLibrary.simpleMessage("New Arrivals"),
         "Filter": MessageLookupByLibrary.simpleMessage("Filter"),
         "ForgetPassword":
             MessageLookupByLibrary.simpleMessage("Forget Password"),
@@ -178,7 +178,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("View Other Products"),
         "Viewcart": MessageLookupByLibrary.simpleMessage("View cart"),
         "Wehavesentyouaverificationcode": MessageLookupByLibrary.simpleMessage(
-            "We have sent you a verification code"),
+            "Enter the code we just sent to email"),
         "WelcometoKhouyot":
             MessageLookupByLibrary.simpleMessage("Welcome to Khouyot"),
         "Whatareyoulookingfor":
@@ -210,6 +210,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "description": MessageLookupByLibrary.simpleMessage("description"),
         "editAddress": MessageLookupByLibrary.simpleMessage("Edit Address"),
         "error": MessageLookupByLibrary.simpleMessage("error"),
+        "invalidPhone": MessageLookupByLibrary.simpleMessage("invalid Phone"),
         "inyourcart": MessageLookupByLibrary.simpleMessage("in your cart"),
         "language": MessageLookupByLibrary.simpleMessage("English"),
         "logintoyouraccount":

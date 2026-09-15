@@ -32,7 +32,7 @@ class FavouriteScreen extends StatelessWidget {
             CustomAppBarScreen(
               title: S.of(context).Favorites,
             ),
-            //verticalSpace(14),
+            verticalSpace(21),
             BlocBuilder<FavCubit, FavState>(
               builder: (context, state) {
                 if (state is GetFavsLoading&&FavCubit.get(context).favs.isEmpty) {
@@ -53,7 +53,7 @@ class FavouriteScreen extends StatelessWidget {
                           crossAxisCount: 2,
                           mainAxisSpacing: 24.h,
                           crossAxisSpacing: 15.w,
-                          childAspectRatio: 0.645),
+                          childAspectRatio: 0.60),
                       itemCount: FavCubit.get(context).favs.length,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics());
@@ -148,6 +148,7 @@ class FavouriteItem extends StatelessWidget {
                 buttonWidth: 121,
                 buttonHeight: 32.h,
                 borderRadius: 8.r,
+
                 buttonText: S.of(context).AddToCart,
                 textStyle: TextStyles.font16BoldWhite,
                 onPressed: () {

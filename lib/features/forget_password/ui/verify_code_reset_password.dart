@@ -115,9 +115,13 @@ class _VerifyResetPasswordColumnState extends State<VerifyResetPasswordColumn> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         verticalSpace(32),
-        Text(
-          S.of(context).EnterVerificationCode,
-          style: TextStyles.font14BlackRegular.copyWith(fontSize: 24.sp),
+        SizedBox(
+          width: 289.w,
+          child: Text(
+            textAlign: TextAlign.center,
+            S.of(context).EnterVerificationCode,
+            style: TextStyles.font14BlackRegular.copyWith(fontSize: 24.sp),
+          ),
         ),
         verticalSpace(8),
         Text(

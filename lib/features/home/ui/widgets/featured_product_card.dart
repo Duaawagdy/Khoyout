@@ -205,14 +205,7 @@ class _FeaturedProductCardState extends State<FeaturedProductCard> {
           ),
 
           // Featured badge (RTL support)
-          Transform.flip(
-            flipX: isArabic,
-            child: Image.asset(
-              AssetsData.fProduct,
-              height: 53.h,
-              width: 95.w,
-            ),
-          ),
+
         ],
       ),
     );

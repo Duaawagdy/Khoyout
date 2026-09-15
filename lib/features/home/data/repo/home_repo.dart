@@ -102,7 +102,7 @@ class HomeRepo{
   }
   Future<Either<ApiErrorModel,List<ProductModel>>> getFeaturedProducts()async{
     try{
-      var response = await dio.get("${ApiConstants.products}/featured");
+      var response = await dio.get("${ApiConstants.products}/new-arrivals");
       final List<ProductModel> categories =
       (response.data['data'] as List)
           .map((e) => ProductModel.fromJson(e))

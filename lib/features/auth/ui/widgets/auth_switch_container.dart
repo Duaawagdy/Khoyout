@@ -12,47 +12,49 @@ class AuthSwitchContainer extends StatelessWidget {
 final Function() onSwitch;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 18.w),
-      padding: EdgeInsets.symmetric(horizontal: 7.w,vertical: 8.h),
-      decoration: BoxDecoration(borderRadius:BorderRadius.circular(40.r),color: Colors.white10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
+    return Center(
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 18.w),
+        padding: EdgeInsets.symmetric(horizontal: 7.w,vertical: 8.h),
+        decoration: BoxDecoration(borderRadius:BorderRadius.circular(40.r),color: Colors.white10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
 
-            onTap: onSwitch,
-            child: AnimatedContainer(
-                width:162.w,
-                padding: EdgeInsets.symmetric(
-                    vertical: 12.h,),
-                decoration: BoxDecoration(
-                    color: isLogin?Colors.transparent:Colors.white10,
-                    borderRadius: BorderRadius.circular(40.r)),
+              onTap: onSwitch,
+              child: AnimatedContainer(
+                  width:162.w,
+                  padding: EdgeInsets.symmetric(
+                      vertical: 12.h,),
+                  decoration: BoxDecoration(
+                      color: isLogin?Colors.transparent:Colors.white10,
+                      borderRadius: BorderRadius.circular(40.r)),
+                  duration: Duration(milliseconds: 300),
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    S.of(context).SignUp,
+                    style: TextStyles.font16BoldWhite,
+                  )),
+            ),
+            GestureDetector(
+              onTap: onSwitch,
+              child: AnimatedContainer(
+                  width:162.w,
                 duration: Duration(milliseconds: 300),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  S.of(context).SignUp,
-                  style: TextStyles.font16BoldWhite,
-                )),
-          ),
-          GestureDetector(
-            onTap: onSwitch,
-            child: AnimatedContainer(
-                width:162.w,
-              duration: Duration(milliseconds: 300),
-                padding: EdgeInsets.symmetric(
-                    vertical: 12.h),
-                decoration: BoxDecoration(
-                    color: isLogin?Colors.white10:Colors.transparent,
-                    borderRadius: BorderRadius.circular(40.r)),
-                child: Text(
-                  textAlign: TextAlign.center,
-                 S.of(context).Login,
-                  style: TextStyles.font16BoldWhite,
-                )),
-          )
-        ],
+                  padding: EdgeInsets.symmetric(
+                      vertical: 12.h),
+                  decoration: BoxDecoration(
+                      color: isLogin?Colors.white10:Colors.transparent,
+                      borderRadius: BorderRadius.circular(40.r)),
+                  child: Text(
+                    textAlign: TextAlign.center,
+                   S.of(context).Login,
+                    style: TextStyles.font16BoldWhite,
+                  )),
+            )
+          ],
+        ),
       ),
     );
   }

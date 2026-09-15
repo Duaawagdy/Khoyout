@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:khouyot/core/theming/styles.dart';
 
 import '../theming/colors.dart';
 
@@ -41,18 +42,25 @@ class OtpInputField extends StatelessWidget {
           keyboardType: TextInputType.number,
           controller: controller,
           focusNode: focusNode,
+          style: TextStyles.font20WhiteMedium.copyWith(color: Color(0xff922F34)),
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
             LengthLimitingTextInputFormatter(1),
           ],
+
           decoration: InputDecoration(
+
+            filled: true,
+            fillColor: Color(0xffFFF9F0),
             enabledBorder: OutlineInputBorder(
+
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(
-                color: ColorsManager.kPrimaryColor,
+                color: Color(0xff922F34),
               ),
             ),
             focusedBorder: OutlineInputBorder(
+
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(
                 color: ColorsManager.darkBlue,

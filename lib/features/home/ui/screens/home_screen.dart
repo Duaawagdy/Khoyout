@@ -102,23 +102,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // ✅ FIXED: Simplified nested BlocBuilders
             _ProductsSection(),
-
+            verticalSpace(36),
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 16.0.w),
+              child: Column(
+                children: [
+                  ViewAll(title: S.of(context).HomeWear,haveAll:true,onTapView: (){}),
+                  verticalSpace(20),
+                  _HomeWearSection(),
+                ],
+              ),
+            ),
             verticalSpace(36),
             _FeaturedProductsSection(),
 
-            verticalSpace(36),
-            _BestSellerProductsSection(),
-            verticalSpace(36),
-          Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 16.0.w),
-            child: Column(
-              children: [
-                ViewAll(title: S.of(context).HomeWear,haveAll:true,onTapView: (){}),
-                verticalSpace(20),
-                _HomeWearSection(),
-              ],
-            ),
-          )
+          //  verticalSpace(36),
+          //  _BestSellerProductsSection(),
+
 
             ],
         ),

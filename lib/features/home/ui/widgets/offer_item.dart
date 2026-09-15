@@ -14,43 +14,54 @@ class OffersHeroItem extends StatelessWidget {
 final Offer offer;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsetsDirectional.only(top: 31.h, start: 9.w),
+    return  Container(
+      padding: EdgeInsetsDirectional.only(top: 24.h, start: 9.w, bottom: 16.h),
       margin: EdgeInsets.symmetric(horizontal: 18.w),
       width: 339.w,
       height: 170.h,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.r),
-          image: DecorationImage(
-              image: AssetImage(
-                "assets/Rectangle.png",
-              ),
-              fit: BoxFit.fitWidth)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            offer.title,
-            style: TextStyles.font16WhiteRegular.copyWith(fontSize: 20.sp),
-          ),
-          verticalSpace(4),
-          SizedBox(
-            width: 209.w,
-            child: Text(
-              softWrap: true,
-             offer.description,
-              style: TextStyles.font16WhiteRegular.copyWith(fontSize: 12.sp),
+        borderRadius: BorderRadius.circular(12.r),
+        image: const DecorationImage(
+          image: AssetImage("assets/Rectangle.png"),
+          fit: BoxFit.fitWidth,
+        ),
+      ),
+      child: SizedBox(
+        width: 217.w,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              offer.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyles.font16WhiteRegular.copyWith(fontSize: 20.sp),
             ),
-          ),
-          verticalSpace(8),
-          AppTextButton(
+            verticalSpace(4),
+            SizedBox(
+              width: 209.w,
+              child: Text(
+                offer.description,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                style: TextStyles.font16WhiteRegular.copyWith(fontSize: 12.sp),
+              ),
+            ),
+            //const Spacer(),
+            AppTextButton(
               buttonText: S.of(context).shopNow,
               buttonHeight: 33.h,
               borderRadius: 8.r,
               buttonWidth: 98,
               textStyle: TextStyles.font16BoldWhite.copyWith(fontSize: 14.sp),
-              onPressed: () {})
-        ],
+              onPressed: () {
+
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -210,15 +210,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //verticalSpace(24),
-                  // Text(
-                  //   S.of(context).CouponCode,
-                  //   style:
-                  //       TextStyles.font16BoldWhite.copyWith(color: Colors.black),
-                  // ),
-                  // verticalSpace(12),
-                  // ApplyCoupon(),
-                  // verticalSpace(24),
+                  verticalSpace(24),
+                   Text(
+                     S.of(context).CouponCode,
+                     style:
+                         TextStyles.font16BoldWhite.copyWith(color: Colors.black),
+                   ),
+                   verticalSpace(12),
+                   ApplyCoupon(),
+                   verticalSpace(24),
                   Container(
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),

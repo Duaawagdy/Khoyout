@@ -13,7 +13,10 @@ class AuthInput extends StatelessWidget {
     this.validator,
     required this.title,
     required this.hintText,
-    required this.prefixIcon, this.lastIcon, this.onTap, this.obscureText,
+    required this.prefixIcon,
+    this.lastIcon,
+    this.onTap,
+    this.obscureText,
   });
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -33,34 +36,35 @@ class AuthInput extends StatelessWidget {
           title,
           style: TextStyles.font16WhiteRegular.copyWith(color: Colors.black),
         ),
-    verticalSpace(8),
+        verticalSpace(8),
         SizedBox(
 
-           // height: 48.h,
+            // height: 48.h,
             child: AppTextFormField(
-              isObscureText: obscureText,
-              width: 339.w,
-              controller: controller,
-              backgroundColor: Colors.white,
-              suffixIcon: GestureDetector(onTap:onTap,child: lastIcon??SizedBox()),
-              prefexIcon: Image.asset(
-                prefixIcon,
-                height: 20,
-              ),
-      validator: validator,
-contentPadding: EdgeInsets.zero,
-              hintText: hintText,
-              borderRadius: 8.r,
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                  borderSide: BorderSide(color: ColorsManager.kPrimaryColor)),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                  borderSide: BorderSide(color: Color(0xffE5E7EB))),
+          isObscureText: obscureText,
+          width: 339.w,
+          controller: controller,
+          backgroundColor: Colors.white,
+          suffixIcon:
+              GestureDetector(onTap: onTap, child: lastIcon ?? SizedBox()),
+          prefexIcon: Image.asset(
+            prefixIcon,
+            height: 20,
+          ),
+          validator: validator,
+          contentPadding: EdgeInsets.zero,
+          hintText: hintText,
+          borderRadius: 8.r,
+          focusedBorder: OutlineInputBorder(
 
-              hintStyle: TextStyles.font16WhiteRegular
-                  .copyWith(color: Colors.grey[500]),
-            )),
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: ColorsManager.kPrimaryColor)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: Color(0xffE5E7EB))),
+          hintStyle:
+              TextStyles.font16WhiteRegular.copyWith(color: Colors.grey[900]),
+        )),
       ],
     );
   }

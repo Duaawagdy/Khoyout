@@ -35,7 +35,7 @@ class VerifyRegStateUi extends StatelessWidget {
           CashHelper.setStringSecured(key: Keys.guestMode, value:'');
           context.pop();
           DioFactory.setTokenIntoHeaderAfterLogin(state.signUpResponse.token!);
-
+          CashHelper.setStringSecured(key: Keys.token, value:state.signUpResponse.token!);
           // context.pushNamed(
           //   Routes.verifyCode,
           // );
@@ -57,49 +57,58 @@ class VerifyRegStateUi extends StatelessWidget {
 
   void _showErrorBottomSheet(BuildContext context, String message) {
     showModalBottomSheet(
+      backgroundColor: Color(0xffFAFAFA),
       context: context,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
       ),
       builder: (context) {
-        return ListView(
-          shrinkWrap: true,
-          physics: ScrollPhysics(),
-          children: [
-            Image.asset('assets/login-succes.png'),
-            verticalSpace(40),
-            SizedBox(
-              width: 275.w,
-              child: Text(
-                textAlign: TextAlign.center,
-                'Your account has been successfully created.',
-                style: TextStyles.font20BlackMedium
-                    .copyWith(fontWeight: FontWeightHelper.bold),
+        return ClipRRect(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
+
+          child: ListView(
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
+            children: [
+              Image.asset('assets/login-succes.png'),
+              verticalSpace(40),
+              SizedBox(
+                width: 275.w,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  'Your account has been successfully created.',
+                  style: TextStyles.font20BlackMedium
+                      .copyWith(fontWeight: FontWeightHelper.bold),
+                ),
               ),
-            ),
-            verticalSpace(8),
-            SizedBox(
-              width: 293.w,
-              child: Text(
-                textAlign: TextAlign.center,
-                'Discover elegant scarves crafted with premium quality.',
-                style: TextStyles.font14BlackRegular,
+              verticalSpace(8),
+              SizedBox(
+                width: 293.w,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  'Discover elegant scarves crafted with premium quality.',
+                  style: TextStyles.font14BlackRegular,
+                ),
               ),
-            ),
-            verticalSpace(48),
-            Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 16.w),
-              child: AppTextButton(
-                buttonText: 'Start Shopping',
-                textStyle: TextStyles.font16BoldWhite,
-                onPressed: () {context.pop();},
-                buttonWidth: 343,
-                buttonHeight: 43,
-                borderRadius: 8.r,
+              verticalSpace(48),
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 16.w),
+                child: AppTextButton(
+                  buttonText: 'Start Shopping',
+                  textStyle: TextStyles.font16BoldWhite,
+                  onPressed: () {
+                    //context.pop();
+          
+                    },
+                  buttonWidth: 343,
+                  buttonHeight: 43.h,
+                  borderRadius: 8.r,
+                ),
               ),
-            )
-          ],
+              verticalSpace(16)
+            ],
+          ),
         );
       },
     );

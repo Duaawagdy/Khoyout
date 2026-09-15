@@ -390,20 +390,20 @@ class S {
     );
   }
 
-  /// `Enter Verification Code`
+  /// `Verify your email address to sign in`
   String get EnterVerificationCode {
     return Intl.message(
-      'Enter Verification Code',
+      'Verify your email address to sign in',
       name: 'EnterVerificationCode',
       desc: '',
       args: [],
     );
   }
 
-  /// `We have sent you a verification code`
+  /// `Enter the code we just sent to email`
   String get Wehavesentyouaverificationcode {
     return Intl.message(
-      'We have sent you a verification code',
+      'Enter the code we just sent to email',
       name: 'Wehavesentyouaverificationcode',
       desc: '',
       args: [],
@@ -490,10 +490,10 @@ class S {
     );
   }
 
-  /// `Featured Products`
+  /// `New Arrivals`
   String get FeaturedProducts {
     return Intl.message(
-      'Featured Products',
+      'New Arrivals',
       name: 'FeaturedProducts',
       desc: '',
       args: [],
@@ -1335,6 +1335,16 @@ class S {
     return Intl.message(
       'Order Details',
       name: 'OrderDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `invalid Phone`
+  String get invalidPhone {
+    return Intl.message(
+      'invalid Phone',
+      name: 'invalidPhone',
       desc: '',
       args: [],
     );

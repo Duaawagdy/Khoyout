@@ -267,12 +267,12 @@ class CartItemContainer extends StatelessWidget {
             AppCachedNetworkImage(
               image: cart[index].product.image,
               width: 162.w,
-              height: 139.h,
+              height: 163.h,
               radius: 7.6.r,
             ),
             SizedBox(
               width: 145.w,
-              height: 116.h,
+              height: 163.h,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,6 +296,22 @@ class CartItemContainer extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4.r)),)
                     ],
                   ),
+                  cart[index].variant.options.length==2?Row(
+                    children: [
+                      Text(
+                        cart[index].variant.options[1].option,
+                        style: TextStyles.font14BlackRegular
+                            .copyWith(fontWeight: FontWeightHelper.medium),
+                      ),horizontalSpace(8),
+                      Container( width: 22.w,
+                        height: 19.h,
+                        child: Text(cart[index].variant.options[1].value,textAlign: TextAlign.center,style: TextStyles.font16BlackRegular,),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Color(0x1f000000)),
+                            borderRadius: BorderRadius.circular(4.r)),)
+                    ],
+                  ):SizedBox.shrink(),
                   PriceDisplay(
                     discountPrice: null,
                     basePrice: cart[index].lineTotalEgp,

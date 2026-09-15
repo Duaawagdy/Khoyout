@@ -99,7 +99,9 @@ class OrderDetailsScreen extends StatelessWidget {
                       ),
                       verticalSpace(9),
                     ],
-                  )
+                  ),
+                  verticalSpace(20),
+                  OrderStatusBar(status: orderResponse.order.status),
                 ],
               ),
             ),
@@ -202,6 +204,57 @@ class OrderDetailsContainer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+
+class OrderStatusBar extends StatelessWidget {
+  const OrderStatusBar({super.key, required this.status});
+
+  final String status;
+
+  static const _steps = ['pending', 'processing', 'shipped', 'delivered'];
+  static const _active = Color(0xff922F34);
+  static const _inactive = Color(0xffE0E0E0);
+  static const _cancelled = Color(0xffB0B0B0);
+
+  int get _currentStep {
+    final s = status.toLowerCase().trim();
+    if (s == 'cancelled' || s == 'canceled') return -1;
+    final i = _steps.indexOf(s);
+    return i == -1 ? 0 : i;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final current = _currentStep;
+    final isCancelled = current == -1;
+
+    return Row(
+      children: List.generate(_steps.length, (index) {
+        final reached = !isCancelled && index <= current;
+
+        return Expanded(
+          child: Padding(
+            padding: EdgeInsetsDirectional.only(
+              end: index == _steps.length - 1 ? 0 : 8.w,
+            ),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              height: 4.h,
+              decoration: BoxDecoration(
+                color: isCancelled
+                    ? _cancelled
+                    : reached
+                    ? _active
+                    : _inactive,
+                borderRadius: BorderRadius.circular(2.r),
+              ),
+            ),
+          ),
+        );
+      }),
     );
   }
 }

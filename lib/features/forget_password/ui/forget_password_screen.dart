@@ -110,52 +110,47 @@ class _ForgetPasswordContainerState extends State<ForgetPasswordContainer> {
             topRight: Radius.circular(20.r),
           ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Form(
-              key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  AuthInput(
-                      title: S.of(context).Email,
-                      controller: emailController,
-                      hintText: S.of(context).EnteryourEmail,
-                      prefixIcon: AssetsData.email),
-                  verticalSpace(87),
-                  AppTextButton(
-                    buttonText: S.of(context).Continue,
-                    textStyle: TextStyles.font16BoldWhite
-                        ,
-                    onPressed: () {
-                      if(formKey.currentState!.validate()) {
-                        ForgetPasswordCubit.get(context).forgetPassword(emailController.text);
-                      }
-                    },
-                    buttonWidth: 339,
-                    buttonHeight: 43.h,
-                    backgroundColor: ColorsManager.kPrimaryColor,
-                    borderRadius: 8.r,
-                  ), verticalSpace(14),AppTextButton(
-                    buttonText: S.of(context).Cancel,
-                    textStyle: TextStyles.font16BoldWhite
-                        .copyWith(color: Color(0xff011213)),
-                    onPressed: () {
-                      context.pop();
-                    },
-                    buttonWidth: 339,
-                    borderColor: Color(0x33000000),
-                    buttonHeight: 43.h,
-                    backgroundColor: Colors.transparent,
-                    borderRadius: 8.r,
-                  ),
-                      verticalSpace(80),
-                  SendEmailStateUi()
-                ],
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              AuthInput(
+                  title: S.of(context).Email,
+                  controller: emailController,
+                  hintText: S.of(context).EnteryourEmail,
+                  prefixIcon: AssetsData.email),
+              verticalSpace(87),
+              AppTextButton(
+                buttonText: S.of(context).Continue,
+                textStyle: TextStyles.font16BoldWhite
+                    ,
+                onPressed: () {
+                  if(formKey.currentState!.validate()) {
+                    ForgetPasswordCubit.get(context).forgetPassword(emailController.text);
+                  }
+                },
+                buttonWidth: 339,
+                buttonHeight: 43.h,
+                backgroundColor: ColorsManager.kPrimaryColor,
+                borderRadius: 8.r,
+              ), verticalSpace(14),AppTextButton(
+                buttonText: S.of(context).Cancel,
+                textStyle: TextStyles.font16BoldWhite
+                    .copyWith(color: Color(0xff011213)),
+                onPressed: () {
+                  context.pop();
+                },
+                buttonWidth: 339,
+                borderColor: Color(0x33000000),
+                buttonHeight: 43.h,
+                backgroundColor: Colors.transparent,
+                borderRadius: 8.r,
               ),
-            )
-          ],
+                  verticalSpace(80),
+              SendEmailStateUi()
+            ],
+          ),
         ),
       ),
     );

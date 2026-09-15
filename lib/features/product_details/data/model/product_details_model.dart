@@ -92,7 +92,7 @@ class ProductModel {
       name: json['name'],
       slug: json['slug'],
       description: json['description'],
-      descriptionAr: json['description_ar'],
+      descriptionAr: json['description_ar']??'',
       inCart: json['in_cart'] ?? false,
       cartQuantity: json['cart_quantity'] ?? 0,
       category: CategoryModel.fromJson(json['category']),
