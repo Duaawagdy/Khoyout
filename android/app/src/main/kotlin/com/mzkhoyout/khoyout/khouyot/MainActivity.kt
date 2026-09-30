@@ -1,4 +1,4 @@
-package com.mzkhoyout.khoyout
+package com.khoyout.app
 
 import io.flutter.embedding.android.FlutterActivity
 
